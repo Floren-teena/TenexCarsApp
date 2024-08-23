@@ -1,0 +1,52 @@
+﻿@model TenexCars.Models.ViewModels.OperatorProfileSettingsViewModel
+
+@{
+    ViewData["Title"] = "Operator Profile Settings Page";
+}
+
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["error"]
+    </div>
+}
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+}
+
+
+<div>
+    <form method="post" asp-controller="Operator" asp-action="ChangePassword">
+        <fieldset>
+            <legend>Profile Details</legend>
+            <div class="col-6">
+                <label for="operatorName" class="col-form-label">Operator Name: </label>
+                <p class="form-control" id="operatorName">@Model.Name</p>
+            </div>
+            <div class="col-6">
+                <label for="operatorEmail" class="col-form-label">Operator Email: </label>
+                <p class="form-control col-6" id="operatorEmail">@Model.Email</p>
+            </div>
+        </fieldset><br />
+
+        <fieldset>
+            <legend>Change password</legend>
+            <div class="col-6">
+                <label for="currentPassword" class="col-form-label">Current Password:</label>
+                <input type="password" asp-for="CurrentPassword" class="form-control" id="currentPassword" required />
+            </div>
+            <div class="col-6">
+                <label for="newPassword" class="col-form-label">New Password:</label>
+                <input type="password" asp-for="NewPassword" class="form-control mb-4" id="newPassword" required />
+            </div>
+            <div class="col-6">
+                <label for="confirmNewPassword" class="col-form-label">Confirm New Password:</label>
+                <input type="password" asp-for="ConfirmPassword" class="form-control mb-4" id="confirmNewPassword" required />
+            </div>
+            <button type="submit" class="btn btn-danger rounded">Change Password</button>
+        </fieldset>
+    </form>
+</div>

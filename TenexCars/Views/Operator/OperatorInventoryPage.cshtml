@@ -1,0 +1,68 @@
+﻿@model IEnumerable<TenexCars.Models.ViewModels.OperatorInventoryViewModel>
+
+<h1 style="margin-top: 50px;" class="mb-4">Car Inventory for @ViewBag.CompanyName</h1>
+<div class="container" style="max-width: 1500px;">
+    <div class="card" style="padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <div class="row">
+            <div class="col-10"></div>
+            <div class="col-2 d-flex">
+
+                <a class="nav-link" asp-area="" asp-controller="Operator" asp-action="CreateVehicle"> <button type="button" class="btn btn-primary btn-md mb-1">Add New Vehicle</button> </a>
+                
+                @* <form class="d-flex ms-3" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                </form> *@
+            </div>
+        </div>
+        <table class="table  table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Vehicle ID</th>
+                    <th scope="col">Vehicle Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Tracker Status</th>
+                    <th scope="col">Subscriber ID</th>
+                    <th scope="col">Subscriber Name</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                    
+
+                    <tr>
+                        
+                        <td>@obj.VehicleId</td>
+                        <td>@obj.VehicleName</td>
+                        <td>@obj.Status</td>
+                        <td>@obj.TrackerStatus</td>
+                        <td>@obj.SubscriberId</td>
+                        <td>@obj.SubscriberName</td>
+                        @* <td class="mb-5">
+                            <div class="w-75 btn-group" role="group">
+                                <a asp-controller="Operator" asp-action="EditVehicle" asp-route-id="" class="btn btn-primary mx-2">
+                                    <i class="bi bi-pen-fill"></i> Edit
+                                </a>
+                                <a asp-controller="Operator" asp-action="Delete" asp-route-id="" class="btn btn-danger mx-2">
+                                    <i class="bi bi-trash"></i> Delete
+                                </a>
+                            </div>
+                        </td> *@
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-controller="Operator" asp-action="CarDetails" asp-route-id="@obj.VehicleId" class="btn btn-primary mx-2">
+                                     More details
+                                </a>
+                                <a asp-controller="Operator" asp-action="Edit" asp-route-id="@obj.VehicleId" class="btn btn-outline-dark btn-secondary mx-2">
+                                    <i class="bi bi-pen-fill"></i> Edit 
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

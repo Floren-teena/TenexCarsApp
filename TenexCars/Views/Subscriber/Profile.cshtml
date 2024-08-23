@@ -1,0 +1,228 @@
+﻿@model TenexCars.Models.ViewModels.SubscriberProfileViewModel
+@using TenexCars.DataAccess.Enums
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <style>
+        .profile-image {
+            width: 100px;
+            height: 100px; 
+            background-color: #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: #aaa;
+            margin-right: 20px;
+        }
+
+        .card-section {
+            margin-top: 20px;
+        }
+
+        .card-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+            .card-info p {
+                margin: 0;
+                margin-left: 10px;
+            }
+
+        .subscription-history-section {
+            margin-top: 20px;
+            display: none; 
+        }
+
+        .star {
+            color: gold;
+        }
+
+        .form-group {
+            max-width: 400px;
+        }
+
+        fieldset {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        legend {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .profile-details {
+            display: flex;
+            align-items: center;
+        }
+
+            .profile-details .form-group {
+                flex-grow: 1;
+            }
+
+        .subscription-actions {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <fieldset>
+                    <legend>Profile Details</legend>    
+                    <div class="profile-details" style="display: flex; align-items: center;">
+                        <div class="profile-image" style="width: 100px; font-size: 48px; text-align: center; margin-right: 20px;">
+                            <span>&#128100;</span>
+                        </div>
+                        <div style="flex-grow: 1;">
+                            <div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
+                                <label for="name" style="width: 100px; font-weight: bold;">Name:</label>
+                                <input type="text" class="form-control" id="name" value="@Model.Subscriber.AppUser?.FirstName @Model.Subscriber.AppUser?.LastName" readonly style="flex-grow: 1; width: calc(100% - 20px); padding: 8px; border: 1px solid #ccc; border-radius: 4px; background-color: #f9f9f9;">
+                            </div>
+                            <div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
+                                <label for="email" style="width: 100px; font-weight: bold;">Email:</label>
+                                <input type="email" class="form-control" id="email" value="@Model.Subscriber.AppUser?.Email" readonly style="flex-grow: 1; width: calc(100% - 20px); padding: 8px; border: 1px solid #ccc; border-radius: 4px; background-color: #f9f9f9;">
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+       
+
+        <fieldset>
+            <legend>Active Subscription</legend>
+            @if (Model.Subscriptions.Any(sub => sub.SubscriptionStatus == SubscriptionStatus.Active))
+            {
+                @foreach (var subscription in Model.Subscriptions.Where(sub => sub.SubscriptionStatus == SubscriptionStatus.Active))
+                {
+                    <div class="active-subscription p-3">
+                        <div class="car-model">@subscription.Vehicle.Make @subscription.Vehicle.Model</div>
+                        <div class="carImg" style="width:300px; height:300px;"><img src="@subscription.Vehicle.ImageUrl" /></div>
+                        <div class="subscription-actions pt-4">
+                            <button type="button" class="btn btn-secondary mr-5" id="show-history-btn">Subscription History</button>
+                            
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelSubscriptionModal" data-subscription-id="@subscription.Id">
+                                Cancel Active Subscription
+                            </button>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="no-active-subscriptions">
+                    <p>There are no active subscriptions at this time.</p>
+                    <button type="button" class="btn btn-secondary mr-5" id="show-history-btn">Subscription History</button>
+                     
+                </div>
+
+            }
+        </fieldset>
+        <div class="container mt-5">
+           
+            <div class="modal fade" id="cancelSubscriptionModal" tabindex="-1" role="dialog" aria-labelledby="cancelSubscriptionModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="cancelSubscriptionModalLabel">Cancel Subscription</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="cancelSubscriptionForm" asp-controller="Subscriber" asp-action="Profile" method="post">
+                            <div class="modal-body">
+                                <input type="hidden" name="subscriptionId" id="subscriptionId" />
+                                <div class="form-group">
+                                    <label for="cancelReason">Reason for cancellation:</label>
+                                    <textarea class="form-control" id="cancelReason" name="cancelReason" rows="3" required></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-danger">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+        <fieldset class="subscription-history-section mb-5" id="subscription-history">
+            <legend>Subscription History</legend>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Car Name</th>
+                        <th>Car model</th>
+                        <th>Duration</th>
+                        <th>Company Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var subscription in Model.Subscriptions)
+                    {
+                        <tr>
+                            <td>@subscription.Vehicle.Make</td>
+                            <td>@subscription.Vehicle.Model</td>
+                            <td>@subscription.Duration</td>
+                            <td>@subscription.Operator.CompanyName</td>
+                            <td>@subscription.SubscriptionStatus</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#cancelSubscriptionModal').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget); 
+                    var subscriptionId = button.data('subscription-id'); 
+                    var modal = $(this);
+                    modal.find('#subscriptionId').val(subscriptionId);
+                });
+            });
+        </script>
+        <script>
+        $(document).ready(function () {
+            
+            $(".btn-danger[data-target='#cancelSubscriptionModal']").click(function () {
+               
+                var subscriptionId = $(this).data("subscription-id");
+
+                
+                $("#subscriptionId").val(subscriptionId);
+            });
+        });
+        </script>
+
+    <script>
+        document.getElementById('show-history-btn').addEventListener('click', function () {
+            var historySection = document.getElementById('subscription-history');
+            historySection.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

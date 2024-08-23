@@ -1,0 +1,40 @@
+﻿@model TenexCars.Models.ViewModels.SubscriberProfileViewModel
+@using TenexCars.DataAccess.Enums
+
+<div class="container mt-5">
+    <fieldset>
+        <legend>Subscription History</legend>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Car Name</th>
+                    <th>Car model</th>
+                    <th>Duration</th>
+                    <th>Company Name</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var subscription in Model.Subscriptions)
+                {
+                    <tr>
+                        <td>@subscription.Vehicle.Make</td>
+                        <td>@subscription.Vehicle.Model</td>
+                        <td>@subscription.Duration</td>
+                        <td>@subscription.Operator.CompanyName</td>
+                        <td>@subscription.SubscriptionStatus</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </fieldset>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    document.getElementById('show-history-btn').addEventListener('click', function () {
+        var historySection = document.getElementById('subscription-history');
+        historySection.style.display = 'block';
+    });
+</script>

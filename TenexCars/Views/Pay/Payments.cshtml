@@ -1,0 +1,40 @@
+﻿@using TenexCars.DataAccess.Models
+@{
+    ViewData["Title"] = "Payments";
+    var transactions = ViewData["transactions"] as List<Transaction>;
+}
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Subscriber Name</th>
+                <th>Vehicle Name</th>
+                <th>Email</th>
+                <th>Amount</th>
+                <th>Transaction Ref</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (transactions != null && transactions.Any())
+            {
+                foreach (var transaction in transactions)
+                {
+                    <tr>
+                        <td>@transaction.Name</td>
+                        <td>@transaction.Vehicle?.Make</td>
+                        <td>@transaction.Email</td>
+                        <td>@transaction.Amount</td>
+                        <td>@transaction.TrxRef</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5">No transactions available</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34607.119
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TenexCars", "TenexCars\TenexCars.csproj", "{7E45C98B-8F4C-4910-A16B-DB19501D2185}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TenexCars.DataAccess", "TenexCars.DataAccess\TenexCars.DataAccess.csproj", "{C1B6CF08-43E0-4B51-B5AA-294C89D92541}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Folder", "Solution Folder", "{374CCF1F-2185-411B-AE49-7A42A0C893E2}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E45C98B-8F4C-4910-A16B-DB19501D2185}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E45C98B-8F4C-4910-A16B-DB19501D2185}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E45C98B-8F4C-4910-A16B-DB19501D2185}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E45C98B-8F4C-4910-A16B-DB19501D2185}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1B6CF08-43E0-4B51-B5AA-294C89D92541}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1B6CF08-43E0-4B51-B5AA-294C89D92541}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1B6CF08-43E0-4B51-B5AA-294C89D92541}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1B6CF08-43E0-4B51-B5AA-294C89D92541}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FDF233A5-55CB-4458-9E73-CED71DDF9353}
+	EndGlobalSection
+EndGlobal

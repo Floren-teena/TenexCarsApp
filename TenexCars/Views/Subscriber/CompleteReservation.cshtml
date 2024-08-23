@@ -1,0 +1,244 @@
+﻿@model TenexCars.Models.ViewModels.CompleteReservationViewModel
+@{
+    ViewData["Title"] = "Complete User Profile";
+}
+
+<style>
+    .preview {
+        width: 350px;
+        height: 220px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 120px;
+        margin-left: 25px;
+    }
+
+        .preview img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+    .hidden {
+        display: none;
+    }
+
+    .icon {
+        cursor: pointer;
+        font-size: 25px;
+    }
+
+    .pay-container {
+        display: flex, block;
+        text-align: center;
+        margin: auto;
+    }
+
+    .pay {
+        padding-top: 10px;
+        border: 2px solid black;
+        margin: auto;
+    }
+
+    .required-field::after {
+        content: " *";
+        color: red;
+    }
+</style>
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["error"]
+    </div>
+}
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+}
+<div class="complete-user-profile">
+    <h2>Complete User Profile</h2> <br />
+    <p> Welcome @Model.FirstName, continue on your profile and make payment to complete your reservation </p>
+
+    <form method="post" class="mb-3 g-3" asp-controller="Subscriber" asp-action="CompleteReservation" enctype="multipart/form-data" id="completeReservationForm">
+        <!-- Personal Information fields -->
+        <fieldset class="row mb-5">
+            <div class="col-4">
+                <legend class="mb-3">Personal Information</legend>
+                <div class="mb-3">
+                    <label for="dateOfBirth" class="form-label required-field">Date of Birth</label>
+                    <input type="date" asp-for="DateOfBirth" class="form-control" id="dateOfBirth" name="DateOfBirth" required />
+                </div>
+                <div class="mb-3">
+                    <label for="driversLicenceFront" class="form-label required-field">Drivers Licence Front view</label>
+                    <input class="form-control" type="file" asp-for="DriversLicenseFront" id="driversLicenceFront" onchange="previewFile('driversLicenceFront', 'frontPreview')" name="DriversLicenseFront" required />
+                </div>
+                <div class="mb-3">
+                    <label for="driversLicenceBack" class="form-label required-field">Drivers Licence Back view</label>
+                    <input class="form-control" type="file" asp-for="DriversLicenseBack" id="driversLicenceBack" onchange="previewFile('driversLicenceBack', 'backPreview')" name="DriversLicenseBack" required />
+                </div>
+            </div>
+
+            <div class="preview col-4" id="frontPreview">
+                <span>front view of driver's license</span>
+            </div>
+
+            <div class="preview col-4" id="backPreview">
+                <span>back view of driver's license</span>
+            </div>
+        </fieldset>
+
+        <!--Additional Information fields-->
+        <fieldset class="row mb-5">
+            <legend class="mb-3 required-field">Additional Information</legend>
+            <div class="col-6">
+                <div class="mb-4">
+                    <select class="form-select" id="subscriptionDuration" asp-for="SubscriptionDuration" name="SubscriptionDuration" onchange="updateReservationSummary()" aria-label="Subscription duration" required>
+                        <option selected disabled>Subscription duration</option>
+                        <option value="3 Months">3 months</option>
+                        <option value="6 Months">6 months</option>
+                        <option value="9 Months">9 months</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <select class="form-select" asp-for="PickupDate" name="PickupDate" aria-label="Desired vehicle pickup date" required>
+                        <option selected disabled>Desired vehicle pickup date</option>
+                        <option value="ASAP">As soon as possible</option>
+                        <option value="1 Month">in 1 month</option>
+                        <option value="2 Months">in 2 months</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="col-12 mb-3 required-field">Are there additional drivers?</label>
+                    <div class="form-check form-check-inline ms-3">
+                        <input class="form-check-input" type="radio" value="true" asp-for="AdditionalDrivers" name="additionalDrivers" id="additionalDriversYes" onclick="toggleAdditionalDrivers(true)">
+                        <label class="form-check-label" for="additionalDriversYes">Yes</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" value="false" asp-for="AdditionalDrivers" name="additionalDrivers" id="additionalDriversNo" onclick="toggleAdditionalDrivers(false)" checked>
+                        <label class="form-check-label" for="additionalDriversNo">No</label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <!--Subscriber information fields-->
+        <fieldset class="mb-5 col-8 hidden" id="subscriberInfoFieldset">
+            <legend class="mb-3">Subscriber Information</legend>
+            <label class="mb-3 d-flex align-items-center">Add Driver Details<i class="bi bi-plus-circle-fill icon ms-2" onclick="showDriverFields()"></i></label>
+            <div id="extraDriverFields"></div>
+        </fieldset>
+
+        <!--Reservation Summary section-->
+        <fieldset class="mb-5">
+            <legend>Reservation Summary</legend>
+            <div id="reservationSummary">You are about to reserve a @Model.VehicleName for <span id="durationText"></span></div>
+        </fieldset>
+
+        <!--Checkout section-->
+        <fieldset class="mb-5">
+            <legend>Checkout</legend>
+            <p>Pricing Summary</p>
+            <div class="d-flex col-12">
+                <p class="col">Today we will charge</p>
+                <p class="col">Reservation fee: $@Model.ReservationFee</p>
+            </div>
+            <ol class="class=" list-group list-group-numbered"">
+                <li>Reservation fee: $@Model.ReservationFee</li>
+                <p>Total: $@Model.TotalCost</p>
+                <p><strong>One time fees</strong></p>
+                <li>At vehicle delivery cost</li>
+                <p>$@Model.DeliveryCost one-time activation fee</p>
+                <p><strong>Your responsibility if you become a subscriber</strong></p>
+                <li>Recurring subscriptions cost</li>
+                <p>$@Model.MonthlyCost /monthly</p>
+            </ol>
+            <div class="pay-container">
+                <div class="col-5 mb-3 pay">
+                    <h5>Pay today to reserve your car</h5>
+                    <div class="total">
+                        <h5>Total: <span class="ms-5">$@Model.TotalCost</span></h5>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-primary" type="submit">Proceed to Payment</button>
+                </div>
+            </div>
+        </fieldset>
+
+    </form>
+
+    <script>
+        let driverCount = 0;
+        const maxDrivers = 4;
+
+        function previewFile(inputId, previewId) {
+            const fileInput = document.getElementById(inputId);
+            const preview = document.getElementById(previewId);
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onloadend = function () {
+                preview.innerHTML = '';
+                const img = document.createElement('img');
+                img.src = reader.result;
+                preview.appendChild(img);
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.innerHTML = '<span>' + (inputId === 'driversLicenceFront' ? 'front of dl' : 'back of dl') + '</span>';
+            }
+        }
+
+        function updateReservationSummary() {
+            const duration = document.getElementById('subscriptionDuration').value;
+            const summaryText = document.getElementById('durationText');
+            summaryText.textContent = duration;
+        }
+
+        function toggleAdditionalDrivers(isVisible) {
+            const subscriberInfoFieldset = document.getElementById('subscriberInfoFieldset');
+            if (isVisible) {
+                subscriberInfoFieldset.classList.remove('hidden');
+            } else {
+                subscriberInfoFieldset.classList.add('hidden');
+                document.getElementById('extraDriverFields').innerHTML = '';
+                driverCount = 0;
+            }
+        }
+
+        function showDriverFields() {
+            if (driverCount < maxDrivers) {
+                driverCount++;
+                const extraDriverFields = document.getElementById('extraDriverFields');
+                const driverFieldset = document.createElement('subscriberInfoFieldset');
+                driverFieldset.classList.add('mb-4');
+                driverFieldset.innerHTML = `
+                                    <legend>Driver ${driverCount}</legend>
+                                    <div class="mb-3">
+                                        <label for="CoSubscribers_${driverCount - 1}__CoSubFirstName" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="CoSubscribers_${driverCount - 1}__CoSubFirstName" name="CoSubscribers[${driverCount - 1}].CoSubFirstName" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="CoSubscribers_${driverCount - 1}__CoSubLastName" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="CoSubscribers_${driverCount - 1}__CoSubLastName" name="CoSubscribers[${driverCount - 1}].CoSubLastName" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="CoSubscribers_${driverCount - 1}__CoSubEmail" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="CoSubscribers_${driverCount - 1}__CoSubEmail" name="CoSubscribers[${driverCount - 1}].CoSubEmail" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="CoSubscribers_${driverCount - 1}__CoSubPhone" class="form-label">Phone</label>
+                                        <input type="text" class="form-control" id="CoSubscribers_${driverCount - 1}__CoSubPhone" name="CoSubscribers[${driverCount - 1}].CoSubPhone" />
+                                    </div>
+                                `;
+                extraDriverFields.appendChild(driverFieldset);
+            } else {
+                alert('You can add up to 4 additional drivers only.');
+            }
+        }
+    </script>
+</div>

@@ -1,0 +1,83 @@
+﻿@model TenexCars.Models.ViewModels.SubscriberProfileViewModel
+@using TenexCars.DataAccess.Enums
+
+<div class="container mt-5">
+    <fieldset>
+        <legend>Active Subscription</legend>
+        @if (Model.Subscriptions.Any(sub => sub.SubscriptionStatus == SubscriptionStatus.Active))
+        {
+            @foreach (var subscription in Model.Subscriptions.Where(sub => sub.SubscriptionStatus == SubscriptionStatus.Active))
+            {
+                <div class="active-subscription p-3">
+                    <div class="car-model">@subscription.Vehicle.Model</div>
+                    <div class="carImg" style="width:300px; height:300px;">
+                        <img src="@subscription.Vehicle.ImageUrl" />
+                    </div>
+                    <div class="subscription-actions pt-4">
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelSubscriptionModal" data-subscription-id="@subscription.Id">
+                            Cancel Active Subscription
+                        </button>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="no-active-subscriptions">
+                <p>There are no active subscriptions at this time.</p>
+            </div>
+        }
+    </fieldset>
+</div>
+
+<!-- Cancel Subscription Modal -->
+<div class="modal fade" id="cancelSubscriptionModal" tabindex="-1" role="dialog" aria-labelledby="cancelSubscriptionModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cancelSubscriptionModalLabel">Cancel Subscription</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="cancelSubscriptionForm" asp-controller="Subscriber" asp-action="CancelSubscription" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="subscriptionId" id="subscriptionId" />
+                    <div class="form-group">
+                        <label for="cancelReason">Reason for cancellation:</label>
+                        <textarea class="form-control" id="cancelReason" name="cancelReason" rows="3" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $(".btn-danger[data-target='#cancelSubscriptionModal']").click(function () {
+
+            var subscriptionId = $(this).data("subscription-id");
+
+
+            $("#subscriptionId").val(subscriptionId);
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#cancelSubscriptionModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var subscriptionId = button.data('subscription-id');
+            var modal = $(this);
+            modal.find('#subscriptionId').val(subscriptionId);
+        });
+    });
+</script>

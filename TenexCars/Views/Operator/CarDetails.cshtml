@@ -1,0 +1,116 @@
+﻿@using TenexCars.DataAccess.Enums
+@model TenexCars.Models.ViewModels.CarDetailsViewModel
+
+@{
+    ViewData["Title"] = "Car Details";
+}
+
+<div class="container mt-5">
+
+    <div class="text-center">
+        <h1>@Model.Make</h1>
+        <h4 class="fst-italic">@Model.Model</h4>
+        <p>@Model.MarketValue</p>
+    </div>
+
+
+    <div class="mt-4 text-center">
+        <img class="img-fluid" src="@Model.ImageUrl" alt="Car image" asp-append-version="true">
+    </div>
+
+    <div class="mt-4">
+        <h2>Key Features</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="list-group">
+                    <li class="list-group-item">Color: @Model.Color</li>
+                    <li class="list-group-item">Passenger seating: @Model.SeatNumbers</li>
+                    <li class="list-group-item">Rear Cargo Space: @Model.TrunkSize</li>
+                    <li class="list-group-item">DC Fast Charging Available: @(Model.DcFastCharging == DcFastCharging.Available ? "Yes" : "No")</li>
+                    <li class="list-group-item">
+                        Level 2 Home Charger included: @(Model.HomeCharger == HomeCharger.Type1 ? "Type 1" : Model.HomeCharger == HomeCharger.Type2 ? "Type 2" : Model.HomeCharger == HomeCharger.Type3 ? "Type 3" : "No")
+                    </li>
+                    <li class="list-group-item">Range of Full Charge: @Model.RangeOfFullCharge </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul class="list-group">
+                    <li class="list-group-item">Car Description: @Model.CarDescription</li>
+                    <li class="list-group-item">TouchScreen Display: @Model.TouchScreenDisplay</li>
+                    <li class="list-group-item">
+                        Wheel Drive: @(Model.WheelDrive == WheelDrive.Four_Wheel_Drive ? "Four Wheel Drive" : Model.WheelDrive == WheelDrive.Front_Wheel_Drive ? "Front Wheel Drive" : Model.WheelDrive == WheelDrive.Rear_Wheel_Drive ? "Rear Wheel Drive" : "Unknown")
+                    </li>
+                    <li class="list-group-item">Front Seats w/ Power 6-Way Driver Lumbar support: @Model.DriverLumbarSupport</li>
+                    <li class="list-group-item">
+                        Driver and Front Passenger Heated-out: @(Model.SeatHeater == SeatHeater.AllSeats ? "All Seats" : Model.SeatHeater == SeatHeater.FrontSeats ? "Front Seats" : Model.SeatHeater == SeatHeater.DriverSeats ? "Driver Seats" : Model.SeatHeater == SeatHeater.BackSeats ? "Back Seats" : "No")
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <h2>Equipments</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="list-group">
+                    <li class="list-group-item">Radio: @(Model.Radio == true ? "Yes" : "No")</li>
+                    <li class="list-group-item">Android Auto/Apple Carplay: @(Model.AndroidAuto_AppleCarPlay == true ? "Yes" : "No")</li>
+                    <li class="list-group-item">Number of Speakers: @Model.NumberOfSpeakers</li>
+                    <li class="list-group-item">Seat Heater: @Model.SeatHeater.ToString().Replace("_", " ")</li>
+                    <li class="list-group-item">TouchScreen Navigation System: @Model.TouchScreenNavSystem</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul class="list-group">
+                    <li class="list-group-item">Integrated Bluetooth hands-free phone system: @(Model.BluetoothSystem == true ? "Yes" : "No")</li>
+                    <li class="list-group-item">Projector Beam Led Headlight: @(Model.ProjectorBeamLedHeadlight == true ? "Yes" : "No")</li>
+                    <li class="list-group-item">Remote Keyless Entry: @(Model.RemoteKeylessEntry == true ? "Yes" : "No")</li>
+                    <li class="list-group-item">Standard Low Tire Pressure Warning: @(Model.StandardLowTirePressureWarning == true ? "Yes" : "No")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <h2>Engine & Mechanical</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="list-group">
+                    <li class="list-group-item">Maximum Torque at RPM: @Model.Torque</li>
+                    <li class="list-group-item">Maximum Horsepower at RPM: @Model.Horsepower</li>
+                    <li class="list-group-item">Engine Type: @Model.EngineType</li>
+                    <li class="list-group-item">Disc Brakes: @Model.DiscBrakes</li>
+                    <li class="list-group-item">Wheel Drive: @Model.WheelDrive.ToString().Replace("_", " ")</li>
+                    <li class="list-group-item">Standard Electronic Stability Control: @(Model.StabilityControl == "Yes" ? "Yes" : "No")</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul class="list-group">
+                    <li class="list-group-item">1-spd Auto Transmission: @Model.TransmissionSpeed</li>
+                    <li class="list-group-item">Turning diameter: @Model.TurningDiameter</li>
+                    <li class="list-group-item">Curb weight: @Model.CurbWeight Lbs.</li>
+                    <li class="list-group-item">Automatic Transmission: @Model.TransmissionType</li>
+                    <li class="list-group-item">Transmission speed: @Model.TransmissionSpeed</li>
+                    <li class="list-group-item">Final Drive Axle Ratio: @Model.DriveAxleRatio</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="mt-4">
+        <h2>Warranty</h2>
+        <p>@Model.CarWarrantyOverview</p>
+        @if (User.IsInRole("Main_Operator") || User.IsInRole(" Operator_Team_Member"))
+        {
+            <a class="nav-link" asp-area="" asp-controller="Operator" asp-action="Edit" asp-route-id="@Model.Id"><button class="btn btn-primary">Edit</button> </a>
+        }
+        else
+        {
+            <a class="nav-link" asp-area="" asp-controller="Subscriber" asp-action="ReserveCar" asp-route-id="@Model.Id"><button class="btn btn-primary">Reserve</button> </a>
+        }
+        
+    </div>
+</div>
+

@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Our Services";
+}
+
+@{
+    Layout = "_Layout"; // Ensure this matches the layout you're using
+}
+
+<div class="container mt-5">
+    <h1 class="text-center">Our Services</h1>
+    <p class="lead text-center">We offer a variety of services to meet your needs</p>
+
+    <div class="row mt-4">
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                <img src="~/Assets/service1.jpg" class="card-img-top" alt="Service 1">
+                <div class="card-body">
+                    <h5 class="card-title">Service One</h5>
+                    <p class="card-text">Description of service one. This service offers great benefits and solutions to your problems.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                <img src="~/Assets/service2.jpg" class="card-img-top" alt="Service 2">
+                <div class="card-body">
+                    <h5 class="card-title">Service Two</h5>
+                    <p class="card-text">Description of service two. This service provides exceptional value and results.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                <img src="~/Assets/service3.jpg" class="card-img-top" alt="Service 3">
+                <div class="card-body">
+                    <h5 class="card-title">Service Three</h5>
+                    <p class="card-text">Description of service three. We guarantee satisfaction and high-quality service.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card-img-top {
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: 500;
+    }
+
+    .card-text {
+        font-size: 1rem;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .lead {
+        font-size: 1.25rem;
+        font-weight: 300;
+    }
+</style>

@@ -1,0 +1,183 @@
+﻿@model TenexCars.Models.ViewModels.ContactPageViewModel
+
+<head>
+    <style>
+        #contact-page {
+            height: 90vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-left {
+            flex-basis: 35%;
+        }
+
+        .contact-right {
+            flex-basis: 60%;
+        }
+
+        .contact-info {
+            margin-top: 25px;
+        }
+
+        .contact-left h3 {
+            font-size: 30px;
+            font-weight: 700;
+            color: black;
+            margin-left: 5px;
+        }
+
+        .contact-left p {
+            font-size: 18px;
+            font-weight: 600;
+            color: rgba(29, 32, 29, 0.79);
+        }
+
+            .contact-left p i {
+                transition: transform 0.5s;
+            }
+
+                .contact-left p i:hover {
+                    transform: translateY(-5px);
+                }
+
+        .message {
+            margin-left: 5px;
+        }
+
+        #emailLink {
+            color: rgba(29, 32, 29, 0.79);
+            text-decoration: none;
+        }
+
+            #emailLink:hover {
+                color: red;
+            }
+
+        .contact-right form {
+            width: 100%;
+        }
+
+        form input,
+        form textarea {
+            width: 100%;
+            border: 0;
+            outline: none;
+            background: rgb(232, 231, 231);
+            padding: 15px;
+            margin: 15px 0;
+            color: black;
+            font-size: 18px;
+            border-radius: 6px;
+        }
+
+        .form-btn {
+            font-size: 18px;
+            margin-top: 20px;
+            animation-delay: 0s;
+        }
+
+        .icon {
+            color: red;
+        }
+
+        .sub-title {
+            font-size: 3.1rem;
+            font-weight: 600;
+            color: black;
+            text-align: center;
+        }
+
+        .button {
+            width: 30%;
+            background-color: red;
+            color: #fff;
+            padding: 15px 50px;
+            font-weight: 700;
+            font-size: 17px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            animation: bottom-to-top 1s ease forwards;
+            animation-delay: 1.5s;
+        }
+    </style>
+</head>
+<body>
+    <!-- ===========================>> Contact Page <<=========================== -->
+    <section class="row" id="contact-page">
+        <h1 class="sub-title intro" id="contact-me-h1">Contact Us</h1>
+        <div class="row">
+            <div class="contact-left left-to-right">
+                <h3 class="contact-info">Want to Contact Us for more inquiries?</h3>
+                <p class="message contact-info">
+                    Send a message <i class="fa-solid fa-arrow-right icon"></i>
+                </p>
+                <p class="icon-shift-left">
+                    <i class="fa-solid fa-envelope contact-info icon"></i>
+                    <a id="emailLink"
+                       title="tenexcars@gmail.com"
+                       href="mailto:tenexcars@gmail.com?subject=Car%20Rental%20Inquiry&body=Hello%20Car%20Rentals%20Team,%0A%0A I am interested in renting a car from your fleet. Could you please provide me with more information on the availability and pricing?%0A%0AThank you,%0A[Your Name]">
+                        Send an email
+                    </a>
+                </p>
+            </div>
+            <div class="contact-right right-to-left">
+                <form method="post" asp-controller="Home" asp-action="Contact" id="emailForm">
+                    <input type="text" name="FullName" placeholder="Your Full Name" required />
+                    <input type="email" name="Email" placeholder="Your Email" required />
+                    <input type="text" name="Subject" placeholder="Subject" required />
+                    <textarea name="Body" rows="6" placeholder="Your Message" required></textarea>
+                    <button type="submit" class="button form-btn">Submit</button>
+                    <input type="hidden" id="email" name="From" />
+                </form>
+            </div>
+        </div>
+    </section>
+@* <!-- ===========================>> Contact Page <<=========================== -->
+<section class="row" id="contact-page">
+        <h1 class="sub-title intro" id="contact-me-h1">Contact Us</h1>
+    <div class="row">
+        <div class="contact-left left-to-right">
+            <h3 class="contact-info">Want to Contact Us for more inquiries?</h3>
+            <p class="message contact-info">
+                Send a message <i class="fa-solid fa-arrow-right icon"></i>
+            </p>
+            <!-- <p id="orText" class="contact-info">or</p> -->
+            <p class="icon-shift-left">
+                <i class="fa-solid fa-envelope contact-info icon"></i>
+                    <a id="emailLink"
+                       title="tenexcars@gmail.com"
+                       href="mailto:tenexcars@gmail.com?subject=Car%20Rental%20Inquiry&body=Hello%20Car%20Rentals%20Team,%0A%0AI am interested in renting a car from your fleet. Could you please provide me with more information on the availability and pricing?%0A%0AThank you,%0A[Your Name]">
+                        Send an email
+                    </a>
+            </p>
+        </div>
+        <div class="contact-right right-to-left">
+                <form method="post" asp-controller="Home" asp-action="Contact" id="emailForm">
+                <input type="text" name="Name" placeholder="Your Name" required />
+
+                    @* @if (!string.IsNullOrEmpty(Model.UserName))
+                    {
+                        <p name="email">@Model.UserName</p>
+                    }
+                    else
+                    {
+                        <input type="email" name="Email" placeholder="Your Email" required />
+                    } 
+                    <input type="email" name="Email" placeholder="Your Email" required />
+                <input type="text" placeholder="Subject"/>
+                <textarea name="Message"
+                          rows="6"
+                          placeholder="Your Message"></textarea>
+                <button type="submit" class="button form-btn">Submit</button>
+                    @* <input type="hidden" id="email" name="Email" value="@Model.Email" /> 
+            </form>
+        </div>
+    </div>
+</section> *@
+</body>
+
+<script src="https://kit.fontawesome.com/60abaa02ed.js"
+        crossorigin="anonymous"></script>

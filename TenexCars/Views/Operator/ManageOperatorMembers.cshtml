@@ -1,0 +1,90 @@
+﻿@model TenexCars.Models.ViewModels.OperatorMemberViewModel
+
+@{
+    ViewBag.Title = "Manage Team Members";
+}
+
+<div class="container">
+    <h2 class="mb-4 mt-3">Manage Operator Members</h2>
+
+    <div class="mb-4">
+        <form id="inviteForm" asp-action="AddOperatorMembers" method="post" class="form-inline col-8">
+            <div class="form-group mb-3">
+                <label for="FirstName" class="sr-only mb-2">First Name</label>
+                <input type="text" asp-for="FirstName" class="form-control" id="FirstName" name="FirstName" placeholder="First name" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="LastName" class="sr-only mb-2">Last Name</label>
+                <input type="text" asp-for="LastName" class="form-control" id="LastName" name="LastName" placeholder="Last name" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="Email" class="sr-only mb-2">Email</label>
+                <input type="email" asp-for="Email" class="form-control" id="Email" name="Email" placeholder="Email" required>
+            </div>
+            <div class="form-group mb-4">
+                <label for="Role" class="sr-only mb-2">Role</label>
+                <select class="form-select" asp-for="Role" id="Role" name="Role" required>
+                    <option selected disabled>Select Role</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Member">Member</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary mb-3">Add Member</button>
+        </form>
+    </div>
+
+    <div class="mb-4">
+        <h3>Operator Members</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var member in Model.OperatorMembers)
+                {
+                    var modalId = member.Email;
+
+                    <tr>
+                        <td>@member.FirstName</td>
+                        <td>@member.LastName</td>
+                        <td>@member.Email</td>
+                        <td>@member.Role</td>
+                        <td>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalId">
+                                Delete
+                            </button> 
+
+                            <div class="modal fade" id="modalId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Delete</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure you want to delete, think twice...
+                                        </div>
+                                         <form asp-action="DeleteOperatorMember" method="post">
+                                            <input type="hidden" name="email" value="@member.Email" />
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                <button type="submit" class="btn btn-danger">Yes</button>
+                                            </div>
+                                        </form> 
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

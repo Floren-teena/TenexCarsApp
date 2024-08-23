@@ -1,0 +1,756 @@
+﻿@using TenexCars.DataAccess.Enums
+@model TenexCars.DataAccess.ViewModels.CreateVehicleViewModel
+
+@{
+    ViewBag.Title = "Create Vehicle";
+    Layout = "_Layout";
+}
+<head>
+    <style>
+        #preview {
+            display: none;
+            width: 100%;
+            height: auto;
+            max-height: 300px;
+            object-fit: contain;
+            margin-top: 10px;
+        }
+        .hero {
+            /* width: 100%;
+            height: 100vh; */
+            /* background-color: oldlace ; */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #dropArea {
+            width: 500px;
+            height: 300px;
+            padding: 30px;
+            background: #fff;
+            text-align: center;
+            border-radius: 20px;
+            border: 1px solid #000;
+        }
+        #imgView {
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            border: 2px dashed #000;
+            background: #f7f8ff;
+        }
+        #imgView img {
+            width: 100%; 
+            height: 100%;
+            border-radius: 20px;
+            filter: grayscale(100%) brightness(0);
+        }
+    </style>
+</head>
+<body>
+<div class="navbar-container">
+</div>
+<div class="main-container">
+    <section class="space-sm">
+        <div class="container">
+            <div class="row mb-2">
+            </div>
+
+            <div class="row flex-md-row card card-md">
+                <div class="card-body bg-secondary">
+                    <div class="text-center mb-5">
+                        <h1 class="h2 mb-2">Add a New Vehicle</h1>
+                        <span>Fill in the details to add a new vehicle to the inventory</span>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="">
+                            <form method="post" asp-action="CreateVehicle" enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <label for="CarDescription" class="form-label">Add Car Description</label>
+                                    <textarea asp-for="CarDescription" class="form-control" id="CarDescription" placeholder="Car Description"></textarea>
+                                    <span asp-validation-for="CarDescription" class="text-danger"></span>
+                                </div>
+
+                                <p>Choose car type</p>
+                                <div class="mb-3">
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label" for="electric">Electric Vehicle</label>
+                                        <input asp-for="Cartype" class="form-check-input" type="radio" name="carType" id="electric" value="Electric" onclick="chargingProps()">
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label" for="hybrid">Hybrid Vehicle</label>
+                                        <input asp-for="Cartype" class="form-check-input" type="radio" name="carType" id="hybrid" value="Hybrid" onclick="chargingProps()">
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label" for="gas">Gas Vehicle</label>
+                                        <input asp-for="Cartype" class="form-check-input" type="radio" name="carType" id="gas" value="Gas" onclick="chargingProps()" checked>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col">
+                                        <label class="form-label" for="Make">Car Name</label>
+                                        <input asp-for="Make" type="text" class="form-control mb-3" placeholder="Car Name" id="Make" />                                        
+                                        <span asp-validation-for="Make" class="text-danger"></span>
+                                    </div>
+                                    <div class="col">
+                                        <label class="form-label" for="Model">Car Model</label>
+                                        <input asp-for="Model" type="text" class="form-control mb-3" placeholder="Car Model" id="Model" />
+                                        <span asp-validation-for="Model" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <label class="form-label" for="ChasisNumber">Chasis Number</label>
+                                        <input asp-for="ChasisNumber" type="text" class="form-control" placeholder="Chasis Number" id="ChasisNumber"/> 
+                                        <span asp-validation-for="ChasisNumber" class="text-danger"></span>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="SeatNumbers">Number of Seats</label>
+                                            <input asp-for="SeatNumbers" type="text" class="form-control" placeholder="Number of Seats" id="SeatNumbers" />
+                                            <span asp-validation-for="SeatNumbers" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="Mileage">Mileage</label>
+                                            <input asp-for="Mileage" type="text" class="form-control" placeholder="Mileage" id="Mileage" />
+                                            <span asp-validation-for="Mileage" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="TrunkSize">Trunk Size</label>
+                                            <input asp-for="TrunkSize" type="text" class="form-control" placeholder="Trunk Size" id="TrunkSize" />
+                                            <span asp-validation-for="TrunkSize" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="Color">Color</label>
+                                            <input asp-for="Color" type="text" class="form-control" placeholder="Color" />
+                                            <span asp-validation-for="Color" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="VIN">VIN</label>
+                                            <input asp-for="VIN" type="text" class="form-control" placeholder="VIN" id="VIN" />
+                                            <span asp-validation-for="VIN" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="PickupAddress">Pickup Address</label>
+                                    <input asp-for="PickupAddress" type="text" class="form-control" placeholder="Pickup Address" id="PickupAddress" />
+                                    <span asp-validation-for="PickupAddress" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col">
+                                        <label class="form-label">State</label>
+                                        <select asp-for="State" class="form-select mb-3" id="State" aria-label="Select State">
+                                            <option value="">Select State</option>
+                                            @foreach(var state in Enum.GetValues(typeof(State)))
+                                            {
+                                                <option value="@state">@state</option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="City">City</label>
+                                            <input asp-for="City" type="text" class="form-control" placeholder="City" id="City" />
+                                            <span asp-validation-for="City" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="ZIP">ZIP</label>
+                                            <input asp-for="ZIP" type="text" class="form-control" placeholder="ZIP" id="ZIP" />
+                                            <span asp-validation-for="ZIP" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="PlateNumber">Plate Number</label>
+                                            <input asp-for="PlateNumber" type="text" class="form-control" placeholder="Plate Number" id="PlateNumber" />
+                                            <span asp-validation-for="PlateNumber" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="CarDealerName">Car Dealer's Name</label>
+                                            <input asp-for="CarDealerName" type="text" class="form-control" placeholder="Car Dealer's Name" id="CarDealerName" disabled />
+                                            <span asp-validation-for="CarDealerName" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <label for="FinacialStartDate" class="form-label">Financing Start Date</label>
+                                        <div class="input-group date" id="start-datepicker-container">
+
+                                            <input asp-for="FinacialStartDate" class="form-control" id="start-datepicker-input" value="" placeholder="dd/mm/yyyy">
+                                            <span class="input-group-text" id="start-datepicker-icon">
+                                                <i class="bi bi-calendar"></i>
+                                            </span>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <label for="FinacialEndDate" class="form-label">Financing End Date</label>
+                                        <div class="input-group date" id="end-datepicker-container">
+
+                                            <input asp-for="FinacialEndDate" class="form-control" id="end-datepicker-input" value=""  placeholder="dd/mm/yyyy">
+                                            <span class="input-group-text" id="end-datepicker-icon">
+                                                <i class="bi bi-calendar"></i>
+                                            </span>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="CarWarranty" class="form-label">Enter Car Warranty Overview</label>
+                                    <textarea asp-for="CarWarrantyOverview" class="form-control" placeholder="Overview of years" id="CarWarranty"></textarea>
+                                    <span asp-validation-for="CarWarrantyOverview" class="text-danger"></span>
+                                </div>
+
+                                <table class="table">
+
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Mechanical & Engine Details</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-group-divider">
+                                        <tr>
+                                            <th scope="row"></th>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="Torque">Torque</label>
+                                            <input asp-for="Torque" type="text" class="form-control" placeholder="0.00 lb-ft" id="Torque" />
+                                            <span asp-validation-for="Torque" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label">Transmission Type</label>
+                                            <select asp-for="TransmissionType" class="form-select" aria-label="TransmissionType">
+                                                <option selected>Transmission Type</option>
+                                                <option value="Automatic">Automatic</option>
+                                                <option value="Manual">Manual</option>
+                                            </select>
+                                            <span asp-validation-for="TransmissionType" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="Horsepower">Horsepower</label>
+                                            <input asp-for="Horsepower" type="text" class="form-control" placeholder="0.00 hp" id="Horsepower" />
+                                            <span asp-validation-for="Horsepower" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="TurningDiameter">Turning Diameter</label>
+                                            <input asp-for="TurningDiameter" type="text" class="form-control" placeholder="0.00 ft" id="TurningDiameter" />
+                                            <span asp-validation-for="TurningDiameter" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <label class="form-label">Engine Type</label>
+                                        <select asp-for="EngineType" class="form-select mb-3" aria-label="Engine Type">
+                                            <option selected value="">Engine Type</option>
+                                            @foreach (var engine in Enum.GetValues(typeof(EngineType)))
+                                            {
+                                                <option value="@engine">@engine</option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="CurbWeight">Curb Weight</label>
+                                            <input asp-for="CurbWeight" type="text" class="form-control" placeholder="0.00 lbs" id="CurbWeight" />
+                                            <span asp-validation-for="CurbWeight" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label">Disc Brakes</label>
+                                            <select asp-for="DiscBrakes" class="form-select" aria-label="Disc Brakes">
+                                                <option selected>Disc Brakes</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                            </select>
+                                            @* <input asp-for="DiscBrakes" type="text" class="form-control" placeholder="Disc Brakes" id="DiscBrakes" /> *@
+                                            <span asp-validation-for="DiscBrakes" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="mb-3"> 
+                                            <label class="form-label" for="TransmissionSpeed">Transmission Speed</label>
+                                            <input asp-for="TransmissionSpeed" type="number" class="form-control" placeholder="0.00" id="TransmissionSpeed" />
+                                            <span asp-validation-for="TransmissionSpeed" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col">
+                                        <label class="form-label">Wheel Drive Type</label>
+                                        <select asp-for="WheelDrive" class="form-select mb-3" aria-label="Wheel Drive Type">
+                                            <option selected value="">Wheel Drive Type</option>
+                                            @foreach (var wheel in Enum.GetValues(typeof(WheelDrive)))
+                                            {
+                                                <option value="@wheel">@wheel</option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="DriveAxleRatio">Drive Axle Ratio</label>
+                                            <input asp-for="DriveAxleRatio" type="number" class="form-control" placeholder="0.00" id="DriveAxleRatio" />
+                                            <span asp-validation-for="DriveAxleRatio" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="StabilityControl">Stability Control</label>
+                                            <select asp-for="StabilityControl" class="form-select" aria-label="Stability Control">
+                                                <option selected>Stability Control</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                            </select>
+                                            @* <input asp-for="StabilityControl" type="text" class="form-control" placeholder="Stability Control" id="StabilityControl" /> *@
+                                            <span asp-validation-for="StabilityControl" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <table class="table">
+
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Key Features</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-group-divider">
+                                        <tr>
+                                            <th scope="row"></th>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="RangeOfFullCharge">Range Of Full Charge</label>
+                                               @*  <select asp-for="RangeOfFullCharge" class="form-select" aria-label="Range Of Full Charge" id="RangeOfFullCharge">
+                                                    <option value="Yes">Yes</option>
+                                                    <option selected value="No">No</option>
+                                                </select> *@
+                                            <input asp-for="RangeOfFullCharge" type="text" class="form-control" placeholder="Range Of Full Charge" id="RangeOfFullCharge" />
+                                            <span asp-validation-for="RangeOfFullCharge" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="TouchScreenDisplay">Touch Screen Display</label>
+                                            <select asp-for="TouchScreenDisplay" class="form-select" aria-label="Touch Screen Display">
+                                                <option value="true">Yes</option>
+                                                <option selected value="false">No</option>
+                                            </select>
+                                            <span asp-validation-for="TouchScreenDisplay" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="CargoSpace">Cargo Space</label>
+                                            <input asp-for="CargoSpace" type="text" class="form-control" placeholder="Cargo Space" id="CargoSpace" />
+                                            <span asp-validation-for="CargoSpace" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="SeatHeater">Seat Heater</label>
+                                            <select asp-for="SeatHeater" class="form-select" aria-label="Seat Heater">
+                                                <option selected value="AllSeats">All Seats</option>
+                                                <option value="FrontSeats"> Front Seats</option>
+                                                <option value="DriverSeats">Driver Seats</option>
+                                                <option value="BackSeats">Back Seats</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+
+                                </div>
+
+                                <div class="row">
+                                    <div id="dcFastChargingContainer" class="mb-3 d-none col">
+                                        <label class="form-label" for="DcFastCharging">Dc Fast Charging</label>
+                                        <select asp-for="DcFastCharging" class="form-select" id="dcFastCharging" aria-label="Dc Fast Charging">
+                                            <option selected value="">Dc Fast Charging</option>
+                                            @foreach (var charge in Enum.GetValues(typeof(DcFastCharging)))
+                                            {
+                                                <option value="@charge">@charge</option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div id="homeChargerContainer" class="mb-3 d-none col">
+                                        <label class="form-label" for="HomeCharger">Home Charger</label>
+                                        <select asp-for="HomeCharger" class="form-select" id="homeCharger" aria-label="Home Charger">
+                                            <option selected value="">Select</option>
+                                            @foreach (var home in Enum.GetValues(typeof(HomeCharger)))
+                                            {
+                                                <option value="@home">@home</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="DriverLumbarSupport">Driver Lumbar Support</label>
+                                            <select asp-for="DriverLumbarSupport" class="form-select" aria-label="Driver Lumbar Support">
+                                                <option value="true">Yes</option>
+                                                <option selected value="false">No</option>
+                                            </select>
+                                            <span asp-validation-for="DriverLumbarSupport" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <table class="table">
+
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Equipments</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-group-divider">
+                                        <tr>
+                                            <th scope="row"></th>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3 form-check">
+                                            <label class="form-check-label" for="radio">Radio</label>
+                                            <input asp-for="Radio" type="checkbox" class="form-check-input" id="radio">
+                                            <span asp-validation-for="Radio" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="mb-3 form-check">
+                                            <label class="form-check-label" for="AndroidAuto_AppleCarPlay">Android Auto/Apple Carplay</label>
+                                            <input asp-for="AndroidAuto_AppleCarPlay" type="checkbox" class="form-check-input" id="AndroidAuto_AppleCarPlay">
+                                            <span asp-validation-for="NumberOfSpeakers" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="mb-3 form-check">
+                                            <label class="form-check-label" for="TouchScreenNavSystem">(1) LCD color touch-screen Navigation system</label>
+                                            <input asp-for="TouchScreenNavSystem" type="checkbox" class="form-check-input" id="TouchScreenNavSystem">
+                                            <span asp-validation-for="TouchScreenNavSystem" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="mb-3 form-check">
+                                            <label class="form-check-label" for="ProjectorBeamLedHeadlight">Projector Beam Led Headlight </label>
+                                            <input asp-for="ProjectorBeamLedHeadlight" type="checkbox" class="form-check-input" id="ProjectorBeamLedHeadlight">
+                                            <span asp-validation-for="ProjectorBeamLedHeadlight" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="mb-3 form-check">
+                                            <label class="form-check-label" for="RemoteKeylessEntry">Remote Keyless Entry</label>
+                                            <input asp-for="RemoteKeylessEntry" type="checkbox" class="form-check-input" id="RemoteKeylessEntry">
+                                            <span asp-validation-for="RemoteKeylessEntry" class="text-danger"></span>
+                                        </div>
+                                        <div class="mb-3 form-check">
+                                            <label class="form-check-label" for="StandardLowTirePressureWarning">Standard Low Tyre Pressure Warning</label>
+                                            <input asp-for="StandardLowTirePressureWarning" type="checkbox" class="form-check-input" id="StandardLowTirePressureWarning">
+                                            <span asp-validation-for="StandardLowTirePressureWarning" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="mb-3 form-check">
+                                            <label class="form-check-label" for="BluetoothSystem">Integrated Bluetooth hands-free phonesystem with phonebook transfer</label>
+                                            <input asp-for="BluetoothSystem" type="checkbox" class="form-check-input" id="BluetoothSystem" />
+                                            <span asp-validation-for="BluetoothSystem" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="NumberOfSpeakers">Number of speakers</label>
+                                            <input asp-for="NumberOfSpeakers" type="text" class="form-control" placeholder="Number of speakers" id="NumberOfSpeakers" />
+                                            <span asp-validation-for="NumberOfSpeakers" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+
+                               
+
+                                <table class="table">
+
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Set Pricing</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-group-divider">
+                                        <tr>
+                                            <th scope="row"></th>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="ReservationFee">Reservation Fee</label>
+                                            <input asp-for="ReservationFee" type="number" class="form-control number-input" placeholder="0.00" id="ReservationFee" min="0" />
+                                            <span asp-validation-for="ReservationFee" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="TotalCostOfCar">Total Cost of Car</label>
+                                            <input asp-for="TotalCostOfCar" type="number" class="form-control number-input" placeholder="0.00" id="TotalCostOfCar" />
+                                            <span asp-validation-for="TotalCostOfCar" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="ActivationFee">Enter Activation Fee</label>
+                                            <input asp-for="ActivationFee" type="number" class="form-control number-input" placeholder="0.00" id="ActivationFee" />
+                                            <span asp-validation-for="ActivationFee" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="MonthlyCost">Monthly cost</label>
+                                            <input asp-for="MonthlyCost" type="number" class="form-control number-input" id="MonthlyCost" placeholder="0.00" />
+                                            <span asp-validation-for="MonthlyCost" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="MarketValue">Market Value</label>
+                                            <input asp-for="MarketValue" type="number" class="form-control number-input" placeholder="0.00" id="MarketValue" />
+                                            <span asp-validation-for="MarketValue" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="DecrementMarketValue">Decrement Market Value</label>
+                                            <input asp-for="DecrementMarketValue" type="number" class="form-control number-input" id="DecrementMarketValue" placeholder="0.00" />
+                                            <span asp-validation-for="DecrementMarketValue" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <table class="table">
+
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Upload Vehicle Image </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-group-divider">
+                                        <tr>
+                                            <th scope="row"></th>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                    <div class="container mt-5">
+                                        @* <p>Upload Car pictures</p> *@
+                                        <div class="hero">
+                                            <label for="inputFile" id="dropArea">
+                                                <input type="file" asp-for="ImageUrl" id="inputFile" hidden accept="image/*" />
+                                                <div id="imgView">
+                                                    <img src="http://100dayscss.com/codepen/upload.svg" alt="Upload Image" />
+                                                    <p>Choose files to Upload</p>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                <div class="d-flex justify-content-center" style="margin-right: 250px; margin-bottom: 30px;">
+                                    <button type="submit" class="btn btn-block btn-secondary bg-primary text-white mt-3" style="width: 400px; font-size: 13px; margin-left: 275px; border: 2px solid beige">Create Vehicle</button>
+                                </div>
+
+                            </form>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end of container-->
+    </section>
+    <!--end of section-->
+</div>
+</body>
+
+@section scripts {
+    <script>
+        //Date Picker implementations
+        $(document).ready(function () {
+            // Initialize the datepicker on the input field
+            var isStartDatepickerOpen = false;
+            $('#start-datepicker-input').datepicker({
+                format: 'dd/mm/yyyy',
+                todayHighlight: true,
+                autoclose: true
+            }).on('show', function () {
+                isStartDatepickerOpen = true;
+            }).on('hide', function () {
+                isStartDatepickerOpen = false;
+            });
+
+            // Toggle datepicker when the input field or icon is clicked
+            $('#start-datepicker-input, #start-datepicker-icon').on('click', function () {
+                if (isStartDatepickerOpen) {
+                    $('#start-datepicker-input').datepicker('hide');
+                } else {
+                    $('#start-datepicker-input').datepicker('show');
+                }
+            });
+
+            var isEndDatepickerOpen = false;
+            $('#end-datepicker-input').datepicker({
+                format: 'dd/mm/yyyy',
+                todayHighlight: true,
+                autoclose: true
+            }).on('show', function () {
+                isEndDatepickerOpen = true;
+            }).on('hide', function () {
+                isEndDatepickerOpen = false;
+            });
+
+            // Toggle datepicker when the input field or icon is clicked
+            $('#end-datepicker-input, #end-datepicker-icon').on('click', function () {
+                if (isEndDatepickerOpen) {
+                    $('#end-datepicker-input').datepicker('hide');
+                } else {
+                    $('#end-datepicker-input').datepicker('show');
+                }
+            });
+        });
+
+        //Implementation for conditionally rendering an input field
+        function chargingProps() {
+            const carType = document.getElementsByName("carType");
+            const dcFastChargingContainer = document.getElementById('dcFastChargingContainer');
+            const homeChargerContainer = document.getElementById('homeChargerContainer');
+
+            if (carType[0].checked || carType[1].checked) {
+                dcFastChargingContainer.classList.remove('d-none');
+                homeChargerContainer.classList.remove('d-none');
+            } else {
+                dcFastChargingContainer.classList.add('d-none');
+                homeChargerContainer.classList.add('d-none');
+            }
+        }
+
+        //Implementation to not allow negative numbers on input fields
+        document.querySelectorAll('.number-input').forEach(function (input) {
+            input.addEventListener('input', function () {
+                if (this.value < 0) {
+                    this.value = 0;
+                }
+            });
+        });
+
+
+        //Implementation for uploading picture on the form's frontend from youtube video
+        const dropArea = document.getElementById("dropArea");
+        const inputFile = document.getElementById("inputFile");
+        const imgView = document.getElementById("imgView");
+        const imgElement = imgView.querySelector("img");
+        const textElement = imgView.querySelector("p");
+
+        inputFile.addEventListener("change", uploadImage);
+
+        function uploadImage() {
+            if (inputFile.files && inputFile.files[0]) {
+                let imgLink = URL.createObjectURL(inputFile.files[0]);
+                imgElement.src = imgLink;
+                imgElement.style.filter = "none"; // Remove grayscale and brightness filters
+                textElement.style.display = "none"; // Hide the text
+            }
+        }
+
+    </script>
+}

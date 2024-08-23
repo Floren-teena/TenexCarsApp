@@ -1,0 +1,167 @@
+﻿@model IEnumerable<TenexCars.DataAccess.Models.Vehicle>
+@{
+    ViewData["Title"] = "Operator Vehicle";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .card {
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .card-body {
+            line-height: 1;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .car-image {
+            height: 150px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .car-image img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: cover;
+            }
+
+        #browse-all-cars {
+            text-decoration: none;
+            margin-bottom: 40px;
+        }
+
+            #browse-all-cars:hover {
+                text-decoration: underline;
+            }
+
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEuNzA2NzIgMy43MDY3Mkw4IDkuOTk5OTZMMTQuMjkzMyAzLjcwNjcyTDE2IDUuNDEzMjlMOC45OTk5NiAxMi40MTRMMCA1LjQxMzI5TDEuNzA2NzIgMy43MDY3MloiIGZpbGw9IiM0NDQ0NDQiLz4KPC9zdmc+Cg==') no-repeat right 10px center;
+            background-size: 12px;
+            padding-right: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4 mb-5">available cars at @ViewBag.OperatorCompanyName</h1>
+        <form method="post" class="mt-4">
+            <div class="filters row mb-4">
+                <div class="col-md-2">
+                    <label for="CarType">Car Type:</label>
+                    <select id="CarType" name="CarType" class="form-control">
+                        <option value="">All</option>
+                        @foreach (var carType in ViewBag.CarType)
+                        {
+                            <option>@carType</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="CarMake">Car Name:</label>
+                    <select id="CarMake" name="CarMake" class="form-control">
+                        <option value="">All</option>
+                        @foreach (var carName in ViewBag.Make)
+                        {
+                            <option>@carName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="CarModel">Car Model:</label>
+                    <select id="CarModel" name="CarModel" class="form-control">
+                        <option value="">All</option>
+                        @foreach (var carModel in ViewBag.CarModels)
+                        {
+                            <option>@carModel</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2 align-self-end">
+                    <button type="submit" id="find-car" class="btn btn-outline-dark btn-block">Find a car</button>
+                </div>
+            </div>
+        </form>
+
+        @if (Model != null && Model.Any())
+        {
+            <div class="car-list row my-5">
+
+                @foreach (var item in Model)
+                {
+                    <div class="car-item col-md-4 mb-4">
+                        <div class="card">
+                            <div class="car-image card-img-top bg-secondary" style="height: 150px;">
+                                <img src="@item.ImageUrl" alt="Car image" asp-append-version="true" />
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">Monthly Cost: @item.MonthlyCost/month</p>
+                                <p class="card-text">Car Name: @item.Make</p>
+                                <p class="card-text">Car Model: @item.Model</p>
+                                <p class="card-text">Car Type: @item.Cartype</p>
+                                <p class="card-text">Color: @item.Color</p>
+                                <p class="card-text">Passenger Seating: @item.SeatNumbers</p>
+                                <p class="card-text">Location: @item.State</p>
+                            </div>
+                            <div class="card-footer">
+                                <a class="nav-link" asp-area="" asp-controller="Operator" asp-action="CarDetails" asp-route-id="@item.Id">
+                                    <button class="btn btn-outline-dark btn-block btn-md">
+                                        All Details
+                                    </button>
+                                    </a>
+                                <a class="nav-link" asp-area="" asp-controller="Subscriber" asp-action="ReserveCar" asp-route-id="@item.Id">
+                                    <button class="btn btn-outline-dark btn-block btn-md">Reserve</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div>
+                No Vehicle matches the properties chosen
+            </div>
+        }
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+<script>
+    // Preserve selected options
+    var selectedCarType = '@ViewBag.SelectedCarType';
+    var selectedCarMake = '@ViewBag.SelectedCarMake';
+    var selectedCarModel = '@ViewBag.SelectedCarModel';
+    var selectedCompanyName = '@ViewBag.SelectedCompanyName';
+
+    $('#CarType').val(selectedCarType);
+    $('#CarMake').val(selectedCarMake);
+    $('#CarModel').val(selectedCarModel);
+    $('#CompanyName').val(selectedCompanyName);
+</script>

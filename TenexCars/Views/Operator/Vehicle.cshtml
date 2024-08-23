@@ -1,0 +1,21 @@
+﻿@model IEnumerable<TenexCars.DataAccess.Models.Vehicle>
+@{
+    ViewData["Title"] = "Vehicle";
+}
+
+<div class="text-center">
+    <h1 class="display-6">EDIT VEHICLE</h1>
+    @* This would be in the car details page *@
+    <div>
+        @foreach (var vehicle in Model)
+        {
+            <div>
+                <a class="nav-link" asp-area="" asp-controller="Operator" asp-action="Edit" asp-route-id="@vehicle.Id">@vehicle.Make</a> @*  For testing purpose *@
+            </div>
+        }
+    </div>
+   @*  <div style="margin-top: 50px">
+        <a class="btn btn-primary" asp-controller="Pay" asp-action="Index">Pay</a>
+        <a class="btn btn-secondary" asp-controller="Pay" asp-action="Payments">View Payments</a>
+    </div> *@
+</div>

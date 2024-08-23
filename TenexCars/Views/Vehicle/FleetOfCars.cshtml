@@ -1,0 +1,250 @@
+﻿@model IEnumerable<TenexCars.Models.ViewModels.VehicleListViewModel>
+@{
+    ViewData["Title"] = "Fleet Of Cars Page";
+    var cars = Model.Take(3).ToList();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Cars</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .card {
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .card-body {
+            line-height: 1;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .car-image {
+            height: 150px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .car-image img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: cover;
+            }
+
+        #browse-all-cars {
+            text-decoration: none;
+            margin-bottom: 40px;
+        }
+
+            #browse-all-cars:hover {
+                text-decoration: underline;
+            }
+
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEuNzA2NzIgMy43MDY3Mkw4IDkuOTk5OTZMMTQuMjkzMyAzLjcwNjcyTDE2IDUuNDEzMjlMOC45OTk5NiAxMi40MTRMMCA1LjQxMzI5TDEuNzA2NzIgMy43MDY3MloiIGZpbGw9IiM0NDQ0NDQiLz4KPC9zdmc+Cg==') no-repeat right 10px center;
+            background-size: 12px;
+            padding-right: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4 mb-5">Browse our Fleet of Cars</h1>
+
+        <form method="post" action="/Vehicle/FleetOfCars">
+            @Html.AntiForgeryToken()
+            <div class="filters row mb-4 d-flex justify-content-center">
+                <div class="col-md-2">
+                    <label for="CarType">Car Type:</label>
+                    <select id="CarType" name="CarType" class="form-control">
+                        <option value="">All</option>
+                        @foreach (var carType in ViewBag.CarType)
+                        {
+                            <option value="@carType">@carType</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="CarMake">Car Name:</label>
+                    <select id="CarMake" name="CarMake" class="form-control">
+                        <option value="">All</option>
+                        @foreach (var carMake in ViewBag.Make)
+                        {
+                            <option value="@carMake">@carMake</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="CarModel">Car Model:</label>
+                    <select id="CarModel" name="CarModel" class="form-control">
+                        <option value="">All</option>
+                        @foreach (var carModel in ViewBag.CarModels)
+                        {
+                            <option value="@carModel">@carModel</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="CompanyName">Company Name:</label>
+                    <select id="CompanyName" name="CompanyName" class="form-control">
+                        <option value="">All</option>
+                        @foreach (var companyName in ViewBag.CompanyName)
+                        {
+                            <option value="@companyName">@companyName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2 align-self-end">
+                    <button type="submit" id="find-car" class="btn btn-outline-dark btn-block">Find a car</button>
+                </div>
+            </div>
+        </form>
+
+
+        @if (Model != null && Model.Any())
+        {
+            <div class="car-list row">
+                @foreach (var item in cars)
+                {
+                    <div class="car-item col-md-4 mb-4">
+                        <div class="card">
+                            <div class="car-image card-img-top bg-secondary" style="height: 150px;">
+                                <img src="@item.ImageUrl" alt="Car image" asp-append-version="true" />
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">Monthly Cost: @item.MonthlyCost/month</p>
+                                <p class="card-text">Car Name: @item.Make</p>
+                                <p class="card-text">Car Model: @item.Model</p>
+                                <p class="card-text">Car Type: @item.Cartype</p>
+                                <p class="card-text">Color: @item.Color</p>
+                                <p class="card-text">Company Name: @item.CompanyName</p>
+                                <p class="card-text">Passenger Seating: @item.SeatNumbers</p>
+                                <p class="card-text">Location: @item.State</p>
+                            </div>
+                            <div class="card-footer">
+                                <a class="nav-link" asp-area="" asp-controller="Operator" asp-action="CarDetails" asp-route-id="@item.Id">
+                                    <button class="btn btn-outline-dark btn-block btn-md">All Details</button>
+                                    </a>
+                                <a class="nav-link" asp-area="" asp-controller="Subscriber" asp-action="ReserveCar" asp-route-id="@item.Id">
+                                    <button class="btn btn-outline-dark btn-block btn-md">Reserve</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-center">
+                No Vehicle matches the properties chosen, search again...
+            </div>
+        }
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="car-list row mb-3" id="all-cars" style="display: none;">
+            @foreach (var item in Model.Skip(3))
+            {
+                <div class="car-item col-md-4 mb-4">
+                    <div class="card">
+                        <div class="car-image card-img-top bg-secondary" style="height: 150px;">
+                            <img src="@item.ImageUrl" alt="Car image" asp-append-version="true" />
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Monthly Cost: @item.MonthlyCost/month</p>
+                            <p class="card-text">Car Name: @item.Make</p>
+                            <p class="card-text">Car Model: @item.Model</p>
+                            <p class="card-text">Car Type: @item.Cartype</p>
+                            <p class="card-text">Color: @item.Color</p>
+                            <p class="card-text">Company Name: @item.CompanyName</p>
+                            <p class="card-text">Passenger Seating: @item.SeatNumbers</p>
+                            <p class="card-text">Location: @item.State</p>
+                        </div>
+                        <div class="card-footer">
+                            <a class="nav-link" asp-area="" asp-controller="Operator" asp-action="CarDetails" asp-route-id="@item.Id">
+                                <button class="btn btn-outline-dark btn-block btn-md">All Details</button>
+                            </a>
+                            <a class="nav-link" asp-area="" asp-controller="Subscriber" asp-action="ReserveCar" asp-route-id="@item.Id">
+                                <button class="btn btn-outline-dark btn-block btn-md">Reserve</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            No Vehicle matches the properties chosen, search again...
+        </div>
+    }
+    </div>
+    <p class="text-center">
+        <a href="#" id="browse-all-cars" class="btn btn-outline-danger mb-5">Browse all cars</a>
+    </p>
+
+
+</body>
+</html>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Handle showing all cars
+        $('#browse-all-cars').click(function () {
+            $('#all-cars').show();
+            $(this).hide();
+        });
+
+        // Handle modal showing
+        $('#newSubscriptionModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var carId = button.data('id');
+
+            $.ajax({
+                url: '/Subscriber/NewSubscription',
+                type: 'GET',
+                data: { carId: carId },
+                success: function (data) {
+                    $('#operatorList').html(data);
+                },
+                error: function () {
+                    alert('Failed to load operators.');
+                }
+            });
+        });
+
+        // Preserve selected options
+        var selectedCarType = '@ViewBag.SelectedCarType';
+        var selectedCarMake = '@ViewBag.SelectedCarMake';
+        var selectedCarModel = '@ViewBag.SelectedCarModel';
+        var selectedCompanyName = '@ViewBag.SelectedCompanyName';
+
+        $('#CarType').val(selectedCarType);
+        $('#CarMake').val(selectedCarMake);
+        $('#CarModel').val(selectedCarModel);
+        $('#CompanyName').val(selectedCompanyName);
+    });
+</script>

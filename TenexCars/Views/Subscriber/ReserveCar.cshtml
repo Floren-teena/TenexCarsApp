@@ -1,0 +1,155 @@
+﻿@using TenexCars.DataAccess.Enums
+@model TenexCars.Models.ViewModels.ReserveCarViewModel
+@{
+    ViewData["Title"] = "Reserve a Car";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <style>
+        body {
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+            margin-bottom: 60px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .terms {
+            margin-top: 20px;
+        }
+
+        .btn-primary {
+            background-color: #4CAF50;
+            border: none;
+        }
+
+            .btn-primary:hover {
+                background-color: #45a049;
+            }
+
+        .alert {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="@Model.ImageUrl" alt="Car image"> <!-- Update image source here -->
+                    <p class="text-center text-danger">*Reminder you must submit a credit application for your reservation to be valid.</p>
+                </div>
+            </div>
+            <div class="col">
+                <h2 class="text-center">Soft Credit Check</h2>
+                <p class="text-center">Please fill out the soft credit application below<br>(This credit check will not affect your credit in any way)</p>
+                <p class="text-center">This step is required to reserve your vehicle with a minimum<br>credit score of 670</p>
+            </div>
+        </div>
+        <form method="post" asp-controller="Subscriber" asp-action="ReserveCar" style="margin-top: 10px">
+            <input type="hidden" name="VehicleId" value="@Model.VehicleId"/>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="firstName">First Name</label>
+                    <input asp-for="FirstName" class="form-control" id="firstName" name="FirstName" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="lastName">Last Name</label>
+                    <input asp-for="LastName" class="form-control" id="lastName" name="LastName" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="email">Email Address</label>
+                    <input asp-for="Email" class="form-control" id="email" name="Email" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="phone">Phone Number</label>
+                    <input asp-for="PhoneNumber" class="form-control" id="phone" name="PhoneNumber" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="address">Home Address</label>
+                <input asp-for="HomeAddress" class="form-control" id="address" name="HomeAddress" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="country">Country</label>
+                    <select asp-for="Country" class="custom-select mr-sm-2" id="country">
+                        <option selected>Choose...</option>
+                        <option value="USA">United States of America</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="state">State</label>
+                    <select asp-for="State" class="custom-select mr-sm-2" id="state" aria-label="Select State">
+                        <option value="">Select State</option>
+                        @foreach (var state in Enum.GetValues(typeof(State)))
+                        {
+                            <option value="@state">@state</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="city">City</label>
+                    <input asp-for="City" class="form-control" id="city" name="City" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="zipCode">Zip Code</label>
+                    <input asp-for="ZipCode" class="form-control" id="zipCode" name="ZipCode" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="password">Password</label>
+                    <input asp-for="Password" class="form-control" id="password" name="Password" type="password" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input asp-for="ConfirmPassword" class="form-control" id="confirmPassword" name="ConfirmPassword" type="password" required>
+                </div>
+            </div>
+            <div class="form-check terms">
+                <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                <label class="form-check-label" for="termsCheck">
+                    I agree to the <a href="#">terms and conditions</a>.
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        @*     @if (TempData["success"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["success"]
+                </div>
+            }
+            @if (TempData["error"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["error"]
+                </div>
+            } *@
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+   @*  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script> *@
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

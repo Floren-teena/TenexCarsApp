@@ -1,0 +1,207 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TenexCars</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <link rel="stylesheet" href="~/TenexCars.styles.css" asp-append-version="true" />
+    <!-- Bootstrap Datepicker CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons (for calendar icon) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        .nav-list a:hover {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="/Assets/logo2.png" alt="" style="height:80px; width:auto; background-color: white;" asp-append-version="true">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        @* <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @* <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                        </li>
+                        </ul> *@
+
+
+                            @*  <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="@Model.ProfilePictureUrl" alt="Profile Picture" class="rounded-circle" style="height:30px; width:30px;" />
+                        @Model.Email
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" asp-area="" asp-controller="" asp-action="">Profile Settings</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="" asp-action="">View profile details</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="" asp-action="">Change Password</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="" asp-action="">Contact Support</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="" asp-action="">Usage Calendar</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                        </ul>
+                        </li> *@
+
+                            @* Check for Operator Role *@
+                            @if (User.IsInRole("Main_Operator"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Operator" asp-action="OperatorDashboard">Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Subscription" asp-action="OperatorSubscription">Subscriptions</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Subscription" asp-action="subscribers">Subscribers</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Operator" asp-action="OperatorInventoryPage">Car Inventory</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Operator" asp-action="OperatorProfileSettings">Settings</a>
+                                </li>
+
+
+
+                            }
+
+                        @if (User.IsInRole("Operator_Team_Member"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Subscription" asp-action="OperatorSubscription">Subscriptions</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Subscription" asp-action="subscribers">Subscribers</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Operator" asp-action="OperatorInventoryPage">Car Inventory</a>
+                            </li>
+                           @*  <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Operator" asp-action="OperatorProfileSettings">Settings</a>
+                            </li>  *@
+                        }
+                        @* Check for Subscriber Role *@
+                            @if (User.IsInRole("Main_Subscriber"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="#" data-bs-toggle="modal" data-bs-target="#newSubscriptionModal">New Subscription</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Subscriber" asp-action="ActiveSubscription">Active Subscription</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Subscriber" asp-action="SubscriptionHistory">Subscription History</a>
+                                </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Subscriber" asp-action="Profile">Profile</a>
+                            </li>
+
+                            }
+                        
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <ul class="navbar-nav ms-auto">
+                                <li class="nav-item">
+                                    <p class="nav-link text-success">Welcome, @User.Identity.Name</p>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-danger" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                                </li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <ul class="navbar-nav ms-auto nav-list">
+                                <li class="nav-item">
+                                    <a class="nav-link text-primary" style="font-size: 20px" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                </li>
+
+                            </ul>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <partial name="_NotificationPartial" />
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - TenexCars - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Datepicker JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+
+<div class="modal fade" id="newSubscriptionModal" tabindex="-1" aria-labelledby="newSubscriptionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="newSubscriptionModalLabel">Available Operators</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul id="operatorList">
+                    <!-- Dynamic content will be loaded here -->
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#newSubscriptionModal').on('show.bs.modal', function (e) {
+            $.ajax({
+                url: '/Subscriber/NewSubscription',
+                type: 'GET',
+                success: function (data) {
+                    $('#operatorList').html(data);
+                },
+                error: function () {
+                    alert('Failed to load operators.');
+                }
+            });
+        });
+    });
+
+</script>

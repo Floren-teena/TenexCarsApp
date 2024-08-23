@@ -1,0 +1,203 @@
+﻿@using TenexCars.DataAccess.Enums
+@model IEnumerable<TenexCars.Models.ViewModels.OperatorSubscriptionViewModel>
+
+@{
+    ViewData["Title"] = "Operator Subscriptions";
+}
+
+@* <!DOCTYPE html>
+<html lang="en">*@
+<head>
+    <meta charset="utf-8" />
+    @* <title>Subscriptions for Operator</title> *@
+    @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@ 
+    @* <link rel="stylesheet" href="~/css/style.css" /> *@
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="mb-4">Subscriptions for @ViewBag.CompanyName</h1>
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+    <table>
+        <thead>
+            <tr>
+                <th>Subsc. ID</th>
+                <th>Customer</th>
+                <th>Vehicle Request</th>
+                <th>Request Date</th>
+                <th>Term Start</th>
+                <th>Term End</th>
+                <th>Pickup Location</th>
+                <th>Vehicle Info</th>
+                <th>Documents</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Customer</td>
+                    <td>@item.VehicleRequest</td>
+                    <td>@item.RequestDate?.ToString("dd/MM/yyyy")</td>
+                    <td>@item.TermStart?.ToString("dd/MM/yyyy")</td>
+                    <td>@item.TermEnd?.ToString("dd/MM/yyyy")</td>
+                    <td>@item.PickupLocation</td>
+                    <td>@item.VehicleInfo</td>
+                    <td>
+                        <a href="@item.DriversLicenseUrlFront" target="_blank">View DL Front</a>
+                        <a href="@item.DriversLicenseUrlBack" target="_blank">View DL Back</a>
+                    </td>
+                    <td>@item.SubscriptionStatus</td>
+
+                    <td>
+                        <div class="d-flex justify-content-between">
+                            @if (item.SubscriptionStatus == "CreditFailed")
+                            {
+                                <button type="button" class="btn btn-outline-dark rounded">Contact Applicant</button>
+                            }
+                            else if (item.SubscriptionStatus == "Pending")
+                            {
+                                <button type="button" class="btn btn-primary rounded me-2" data-bs-toggle="modal" data-bs-target="#approveModal-@item.Id">Approve</button>
+                                <button type="button" class="btn btn-danger rounded me-2">Decline</button>
+                                <button type="button" class="btn btn-outline-dark rounded" data-bs-toggle="modal" data-bs-target="#contactModal-@item.Id">Contact</button>
+                            }
+                            else if (item.SubscriptionStatus == "Approved")
+                            {
+                                <button type="button" class="btn btn-success rounded me-2" data-bs-toggle="modal" data-bs-target="#assignVehicleModal-@item.Id">Assign</button>
+                                <button type="button" class="btn btn-info rounded me-2">Deliver</button>
+                                <button type="button" class="btn btn-outline-dark rounded" data-bs-toggle="modal" data-bs-target="#contactModal-@item.Id">Contact</button>
+                            }
+                            else if (item.SubscriptionStatus == "DLNeeded")
+                            {
+                                <button type="button" class="btn btn-outline-dark rounded" data-bs-toggle="modal" data-bs-target="#contactModal-@item.Id">Contact</button>
+                            }
+                            else if (item.SubscriptionStatus == "AwaitingAssignment")
+                            {
+                                <button type="button" class="btn btn-success rounded me-2" data-bs-toggle="modal" data-bs-target="#assignVehicleModal-@item.Id">Assign</button>
+                                <button type="button" class="btn btn-outline-dark rounded" data-bs-toggle="modal" data-bs-target="#contactModal-@item.Id">Contact</button>
+                            }
+                            else if (item.SubscriptionStatus == "Assigned")
+                            {
+                                <button type="button" class="btn btn-success rounded me-2">Charge Now</button>
+                                <button type="button" class="btn btn-outline-dark rounded" data-bs-toggle="modal" data-bs-target="#contactModal-@item.Id">Contact</button>
+                            }
+                            else if (item.SubscriptionStatus == "Active")
+                            {
+                                <button type="button" class="btn btn-danger rounded me-2">Ground</button>
+                                <button type="button" class="btn btn-outline-dark rounded" data-bs-toggle="modal" data-bs-target="#contactModal-@item.Id">Contact</button>
+                            }
+                            else if (item.SubscriptionStatus == "Completed")
+                            {
+                                <button type="button" class="btn btn-warning rounded me-2">Re-activate</button>
+                            }
+                        </div>
+
+                        <!--Approve Modal-->
+                        <div class="modal fade" id="approveModal-@item.Id" tabindex="-1" aria-labelledby="approveModalLabel-@item.Id" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-3" id="approveModalLabel-@item.Id">Approve Subscription</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body border border-1 border-dark-subtle m-5">
+                                        <p>Vehicle Make/Model: @item.VehicleRequest</p>
+                                        <p class="mb-4">Vehicle Color: @item.VehicleColor</p>
+                                        <p>VIN: @item.VehicleInfo</p>
+                                    </div>
+                                    <form method="post" asp-controller="Subscription" asp-action="Approve">
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger rounded" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary rounded">Approve</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Contact Modal-->
+                        <div class="modal fade" id="contactModal-@item.Id" tabindex="-1" aria-labelledby="contactModalLabel-@item.Id" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-3" id="contactModalLabel-@item.Id">Contact Applicant</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form method="post" asp-controller="Subscription" asp-action="Contact" id="emailForm">
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label for="recipient-name" class="col-form-label">Recipient:</label>
+                                                <p class="form-control" id="recipient-name">@item.Email</p>
+                                            </div>
+                                            <div>
+                                                <label for="mailSubject" class="col-form-label">Subject:</label>
+                                                <input class="form-control" id="mailSubject" name="Subject" />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="message-text" class="col-form-label">Message:</label>
+                                                <textarea class="form-control" id="message-text" name="Body" style="height: 120px" placeholder="Send a message to the applicant..."></textarea>
+                                            </div>
+                                            <input type="hidden" id="email" name="Email" value="@item.Email" />
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger rounded" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-success rounded" id="sendEmailButton">Send message</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Assign Vehicle Modal -->
+                        <div class="modal fade" id="assignVehicleModal-@item.Id" tabindex="-1" aria-labelledby="assignVehicleModalLabel-@item.Id" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-3" id="assignVehicleModalLabel-@item.Id">Assign Vehicle</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body border border-1 border-dark-subtle m-5">
+                                        <p>Vehicle Make/Model: @item.VehicleRequest</p>
+                                        <p class="mb-4">Vehicle Color: @item.VehicleColor</p>
+                                        <p>VIN: @item.VehicleInfo</p>
+                                    </div>
+                                    <form method="post" asp-controller="Subscription" asp-action="AssignVehicle">
+                                        <div class="modal-footer d-flex justify-content-center">
+                                            <button type="submit" class="btn btn-success rounded">Assign to Request</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>

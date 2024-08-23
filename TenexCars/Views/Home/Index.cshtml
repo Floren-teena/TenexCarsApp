@@ -1,0 +1,324 @@
+﻿@model IEnumerable<TenexCars.DataAccess.Models.Vehicle>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@{
+    Layout = "_IndexLayout";
+}
+
+<style>
+    .car-image {
+        width: 100%; /* Ensures the image takes up the full width of the column */
+    }
+
+    .card-image {
+        margin-bottom: 20px; /* Adds space between the image and the paragraph */
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* Navbar Styles */
+    .mfn__top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+    }
+
+    .mfn__logoholder {
+        display: flex;
+        align-items: center;
+    }
+
+    .mfn__logolink {
+        display: flex;
+        align-items: center;
+        color: white;
+        text-decoration: none;
+    }
+
+    .mfn__logo--desktop {
+        height: 35px;
+        width: 168px;
+    }
+
+    .mfn__topright {
+        display: flex;
+        align-items: center;
+    }
+
+    .header-nav-item {
+        display: flex;
+    }
+
+    .utility-nav {
+        list-style: none;
+        display: flex;
+        margin: 0;
+        padding: 0;
+    }
+
+        .utility-nav li {
+            margin-right: 20px;
+        }
+
+    .utility-nav__header-link a {
+        color: white;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .sign-in {
+        margin-left: 20px;
+        font-size: medium;
+    }
+
+    .cta-container button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    .mfn__hamburger {
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        display: none; /* Only show on mobile */
+    }
+
+    .mfn__hamburger-icon,
+    .mfn__close-icon {
+        font-size: 24px;
+    }
+
+    .modal-backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+        border-radius: 0.5rem;
+    }
+
+    /* Footer link color */
+    .footer a {
+        font-size: 12px;
+        color: black;
+        text-decoration: underline;
+    }
+
+        .footer a:hover {
+            color: blue;
+        }
+
+        .footer a:active {
+            color: red;
+        }
+
+    p {
+        font-size: small;
+    }
+
+    /* Custom card height */
+    .custom-card {
+        min-height: 400px; /* Increase the card height as needed */
+    }
+
+    #fleetCarousel {
+        width: 100%;
+    }
+
+        #fleetCarousel .carousel-item {
+            height: auto;
+        }
+
+        #fleetCarousel .car-image {
+            max-height: 150px;
+            width: auto;
+            margin: 0 auto;
+        }
+
+        #fleetCarousel p {
+            margin-top: 10px;
+        }
+
+    /* Responsive styles for smaller screens */
+    @@media (max-width: 767px) {
+        #fleetCarousel .row {
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        #fleetCarousel .col-md-3 {
+            flex: 0 0 auto;
+            width: 50%;
+        }
+    }
+
+    /* Responsive styles */
+    @@media (max-width: 768px) {
+        .mfn__hamburger {
+            display: block;
+        }
+
+        .mfn__topright,
+        .utility-nav {
+            display: none;
+        }
+
+        .mfn__top[aria-expanded="true"] .mfn__topright,
+        .mfn__top[aria-expanded="true"] .utility-nav {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+</style>
+
+<!-- Meet the Fleet Section -->
+<div class="container text-center my-5 mb-5 m">
+    <a class="nav-link" asp-area="" asp-controller="Vehicle" asp-action="FleetOfCars" style="color:red; font-size: 20px;">
+        View Fleet
+    </a>
+    <div id="fleetCarousel" class="carousel slide mt-5" data-ride="carousel">
+        <div class="carousel-inner">
+            @for (int i = 0; i < Model.Count(); i += 4)
+            {
+                <div class="carousel-item @(i == 0 ? "active" : "")">
+                    <div class="row">
+                        @for (int j = 0; j < 4 && i + j < Model.Count(); j++)
+                        {
+                            var vehicle = Model.ElementAt(i + j);
+                            <div class="col-md-3">
+                                <img src="@vehicle.ImageUrl" class="img-fluid car-image" alt="@vehicle.Model">
+                                <p>@vehicle.Make @vehicle.Model</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+     <!-- Current Deals Section -->
+    <div class="row">
+    <div class="col-md-3 mb-3">
+    <div class="card h-100 shadow-sm custom-card">
+    <div class="card-body d-flex flex-column">
+                <h6 class="card-title">Unbeatable Offers Await!</h6>
+    <img src="~/Assets/work3.jpg" class="img-fluid car-image card-image h-50" alt="SUV">
+    <p class="card-text flex-grow-1">Experience the joy of renting with confidence from a brand you can trust.</p>
+    </div>
+    </div>
+    </div>
+    <div class="col-md-3 mb-3">
+    <div class="card h-100 shadow-sm custom-card">
+    <div class="card-body d-flex flex-column">
+                <h6 class="card-title">Drive On, Worry-Free</h6>
+    <img src="~/Assets/work1.jpg" class="img-fluid car-image card-image h-50" alt="SUV">
+    <p class="card-text flex-grow-1">Need to rent a vehicle after an accident? Let us help you get back on the road.</p>
+    </div>
+    </div>
+    </div>
+    <div class="col-md-3 mb-3">
+    <div class="card h-100 shadow-sm custom-card">
+    <div class="card-body d-flex flex-column">
+                <h6 class="card-title">Your Journey, Our Passion</h6>
+    <img src="~/Assets/work2.jpg" class="img-fluid car-image card-image h-50" alt="SUV">
+    <p class="card-text flex-grow-1">Ready to advance the world, one journey at a time? Then let's get moving.</p>
+    </div>
+    </div>
+    </div>
+    <div class="col-md-3 mb-3">
+    <div class="card h-100 shadow-sm custom-card">
+    <div class="card-body d-flex flex-column">
+    <h6 class="card-title">Your Satisfaction, our happiness</h6>
+    <img src="~/Assets/work4.jpg" class="img-fluid car-image card-image h-50" alt="SUV">
+    <p class="card-text flex-grow-1"> Our commitment to ensure you always have a clean, well-maintained vehicle.</p>
+    </div>
+    </div>
+    </div>
+    </div>
+    <hr /> 
+
+    <!-- Footer Section -->
+    <footer class="footer bg-white pt-2 pb-2 ">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <p style="margin-left:10px">Reservations</p>
+                    <ul class="list-unstyled">
+
+                        <a class="nav-link" asp-area="" asp-controller="Vehicle" asp-action="FleetOfCars">
+                            Start a Reservation
+                        </a>
+
+                        <a class="nav-link" asp-area="" asp-controller="Vehicle" asp-action="FleetOfCars">
+                            Subscribe with TenexCars
+                        </a>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <p>The Company</p>
+                    <ul class="list-unstyled">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="AboutUs">
+                            AboutUs
+                        </a>
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Testimonies">
+                            Testimonies
+                        </a>
+
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <p>TenexCars</p>
+                    <ul class="list-unstyled">
+                        <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">
+                            SignIn
+                        </a>
+
+                        <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Url.Action("Profile", "Subscriber")">
+                            User Profile
+                        </a>
+
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <p>Customer Service</p>
+                    <ul class="list-unstyled">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Help">
+                            Help & FQAs
+                        </a>
+
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a>
+
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="~/js/site.js"></script>

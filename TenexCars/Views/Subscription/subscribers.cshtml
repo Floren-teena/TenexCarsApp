@@ -1,0 +1,30 @@
+﻿@model TenexCars.DataAccess.ViewModels.OperatorSubscriptionsViewModel
+
+<h1>Subscribers for @ViewBag.CompanyName</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Document</th>
+           <th>Subscription Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var subscription in Model.Subscriptions)
+        {
+            <tr>
+                <td>@subscription.Subscriber?.FirstName @subscription.Subscriber?.LastName</td>
+                <td>@subscription.Subscriber?.HomeAddress</td>
+                <td>@subscription.Subscriber?.Email</td>
+                <td>@subscription.Subscriber?.PhoneNumber</td>
+                <td><a href="@subscription.DLUrlFront" target="_blank">DL Front</a>
+                    <a href="@subscription.DLUrlBack" target="_blank">DL Back</a>
+                </td>
+               <td>@subscription.SubscriptionStatus</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Payment Verification";
+    var error = ViewData["error"] as string;
+}
+
+<div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
+    <div class="card" style="width: 24rem;">
+        <div class="card-body">
+            <h3 class="card-title text-center">Payment Verification</h3>
+            @if (!string.IsNullOrEmpty(error))
+            {
+                <div class="alert alert-danger">@error</div>
+            }
+            else
+            {
+                <div class="alert alert-success">Your payment was successful!</div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Redirect to the Post Reservation page after 10 seconds
+        setTimeout(function() {
+            window.location.href = '@Url.Action("PostReservation", "Subscriber")';
+        }, 10000); // 10000 milliseconds = 10 seconds
+    </script>
+}

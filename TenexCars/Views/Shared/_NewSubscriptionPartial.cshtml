@@ -1,0 +1,11 @@
+﻿@model IEnumerable<TenexCars.Models.ViewModels.NewSubscriptionViewModel>
+
+@foreach (var ops in Model)
+{
+    <div class="mb-3">
+        <a href="/Operator/OperatorVehicles/@ops.OperatorId" style="text-decoration:none">
+            <img src="@ops.OperatorLogo" class="mb-2 me-2" style="width:150px; height:100px;" />
+            @ops.CompanyName
+        </a>
+    </div>
+}

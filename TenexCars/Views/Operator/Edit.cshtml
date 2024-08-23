@@ -1,0 +1,442 @@
+﻿@using TenexCars.DataAccess.Enums
+@model VehicleViewModel
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .form-row {
+        margin-bottom: 15px;
+    }
+
+        .form-row label {
+            /* display: block; */
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-row input, .form-row select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+            .form-row input[type="checkbox"] {
+                width: auto;
+            }
+
+    fieldset {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    legend {
+        font-weight: bold;
+    }
+
+    .car-details p {
+        font-size: 1.2em;
+        margin: 5px 0;
+    }
+
+    .main-image, .carousel, .upload-section {
+        margin-top: 20px;
+    }
+
+        .main-image img {
+            max-width: 100%;
+        }
+
+    .carousel {
+        display: flex;
+        align-items: center;
+    }
+
+    .carousel-btn {
+        background: none;
+        border: none;
+        font-size: 1.5em;
+        cursor: pointer;
+    }
+
+    .carousel-images {
+        display: flex;
+        overflow-x: auto;
+    }
+
+        .carousel-images img {
+            max-width: 100px;
+            margin: 0 5px;
+        }
+
+    .upload-section {
+        border: 2px dashed #ccc;
+        padding: 20px;
+        text-align: center;
+    }
+
+        .upload-section input[type="file"] {
+            display: none;
+        }
+
+        .upload-section label {
+            cursor: pointer;
+            display: inline-block;
+        }
+
+    .upload-icon {
+        font-size: 2em;
+    }
+
+    .buttons {
+        text-align: right;
+        margin-top: 20px;
+    }
+
+        .buttons button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .buttons .edit-btn {
+            background-color: #28a745;
+        }
+        .buttons .save-btn {
+            background-color: #007bff;
+        }
+
+    .remove-image {
+        color: red;
+        cursor: pointer;
+    }
+
+        .remove-image:hover {
+            text-decoration: underline;
+        }
+
+        .hero {
+            /* width: 100%;
+            height: 100vh; */
+            /* background-color: oldlace ; */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #dropArea {
+            width: 500px;
+            height: 300px;
+            padding: 30px;
+            background: #fff;
+            text-align: center;
+            border-radius: 20px;
+            border: 1px solid #000;
+        }
+        #imgView {
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            border: 2px dashed #000;
+            background: #f7f8ff;
+        }
+        #imgView img {
+            width: 100%; 
+            height: 100%;
+            border-radius: 20px;
+            filter: grayscale(100%) brightness(0);
+        }
+</style>
+<body>
+    <form method="post" asp-controller="Operator" asp-action="Edit" enctype="multipart/form-data" id="myForm">
+        <div class="buttons">
+            <button type="button" class="edit-btn btn-sm col-2 mb-2" id="editButton">EDIT</button>
+        </div>
+        <fieldset>
+            <legend>Insurance Details</legend>
+            <div class="form-row">
+                <div class="row">
+                    <div class="col">
+                        <label asp-for="FinacialStartDate">Insurance Start Date</label>
+                        <input type="date" asp-for="FinacialStartDate" disabled />
+                        <span asp-validation-for="FinacialStartDate"></span>
+                    </div>
+
+                    <div class="col">
+                        <label asp-for="FinacialEndDate">Insurance End Date</label>
+                        <input type="date" class="mb-4" asp-for="FinacialEndDate" disabled />
+                        <span asp-validation-for="FinacialEndDate"></span>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="form-label mb-2" style="font-size: 17px">Update Insurance Documents</label><br />
+                    @* <a href="@Model.InsuranceDocument" class="mb-4">View Current Insurance document</a><br /> *@
+                    <input type="file" asp-for="InsuranceDocument" target="_blank" class="form-control" />
+                </div>
+            </div>
+        </fieldset>
+        <h5>Vehicle ID: @Model.Id</h5>
+        <div class="car-details">
+            <p>Car Type: @Model.Cartype</p>
+            <p>Car Name: @Model.Make</p>
+            <p>Car Model: @Model.Model</p>
+        </div>
+        <div class="form-row">
+            <label asp-for="ChasisNumber">Chassis Number</label>
+            <input type="text" asp-for="ChasisNumber" placeholder="@Model.ChasisNumber" disabled />
+            <span asp-validation-for="ChasisNumber"></span>
+        </div>
+        <div class="form-row">
+            <label asp-for="SeatNumbers">Number of Seats</label>
+            <input type="number" asp-for="SeatNumbers" placeholder="@Model.SeatNumbers" disabled />
+            <span asp-validation-for="SeatNumbers"></span>
+        </div>
+        <div class="form-row">
+            <label asp-for="Mileage">Mileage</label>
+            <input type="number" asp-for="Mileage" placeholder="@Model.Mileage" disabled />
+            <span asp-validation-for="Mileage"></span>
+        </div>
+        <div class="form-row">
+            <label asp-for="TrunkSize">Trunk Size</label>
+            <input type="text" asp-for="TrunkSize" placeholder="@Model.TrunkSize" disabled />
+            <span asp-validation-for="TrunkSize"></span>
+        </div>
+        <div class="form-row">
+            <label asp-for="Color">Color</label>
+            <input type="text" asp-for="Color" placeholder="@Model.Color" disabled />
+            <span asp-validation-for="Color"></span>
+        </div>
+        <div class="form-row">
+            <label asp-for="VIN">VIN</label>
+            <input type="text" asp-for="VIN" placeholder="@Model.VIN" disabled />
+            <span asp-validation-for="VIN"></span>
+        </div>
+        <div class="form-row">
+            <label asp-for="PickupAddress">Pickup Address</label>
+            <input type="text" asp-for="PickupAddress" placeholder="@Model.PickupAddress" disabled />
+            <span asp-validation-for="PickupAddress"></span>
+        </div>
+        
+        <div class="form-row">
+            <label class="form-label" asp-for="State">State</label>
+            <select asp-for="State" class="form-select mb-3" id="State" aria-label="Select State" disabled>
+                <option value="">Select State</option>
+                @foreach(var state in Enum.GetValues(typeof(State)))
+                {
+                    <option value="@state">@state</option>
+                }
+            </select>
+            <span asp-validation-for="State"></span>
+        </div>
+        <div class="form-row">
+            <label asp-for="City">City</label>
+            <input type="text" asp-for="City" placeholder="@Model.City" disabled />
+            <span asp-validation-for="City"></span>
+        </div>
+        <div class="form-row">
+            <label asp-for="ZIP">ZIP Code</label>
+            <input type="text" asp-for="ZIP" placeholder="@Model.ZIP" disabled />
+            <span asp-validation-for="ZIP"></span>
+        </div>
+        <div class="form-row">
+            <label asp-for="CarDealerName">Car Dealer Name</label>
+            <input type="text" asp-for="CarDealerName" placeholder="@Model.CarDealerName" disabled />
+            <span asp-validation-for="CarDealerName"></span>
+        </div>
+       @*  <div class="form-row">
+            <p>Insurance Document <a href="#">View File</a></p>
+        </div> *@
+        <div class="form-row">
+            <label asp-for="Torque">Torque</label>
+            <input type="text" asp-for="Torque" placeholder="@Model.Torque" disabled />
+            <span asp-validation-for="Torque"></span>
+        </div>
+        <div class="form-row">
+            <label asp-for="TransmissionType">Transmission Type</label>
+            <input type="text" asp-for="TransmissionType" placeholder="@Model.TransmissionType" disabled />
+            <span asp-validation-for="TransmissionType"></span>
+        </div>
+        <div class="form-row">
+            <label asp-for="Horsepower">Horse Power</label>
+            <input type="text" asp-for="Horsepower" placeholder="@Model.Horsepower" disabled />
+            <span asp-validation-for="Horsepower"></span>
+        </div>
+        <div class="form-row">
+            <label asp-for="TurningDiameter">Turning Diameter</label>
+            <input type="text" asp-for="TurningDiameter" placeholder="@Model.TurningDiameter" disabled />
+            <span asp-validation-for="TurningDiameter"></span>
+        </div>
+        <div class="form-row">
+            <label asp-for="EngineType">Engine Type</label>
+            <input type="text" asp-for="EngineType" placeholder="@Model.EngineType" disabled />
+            <span asp-validation-for="EngineType"></span>
+        </div>
+        <div class="form-row">
+            <label asp-for="CurbWeight">Curb Weight</label>
+            <input type="text" asp-for="CurbWeight" placeholder="@Model.CurbWeight" disabled />
+            <span asp-validation-for="CurbWeight"></span>
+        </div>
+        <div class="form-row">
+            <label asp-for="DiscBrakes">Disk Brakes</label>
+            <input type="text" asp-for="DiscBrakes" placeholder="@Model.DiscBrakes" disabled />
+            <span asp-validation-for="DiscBrakes"></span>
+        </div>
+        <div class="form-row">
+            <label asp-for="TransmissionSpeed">Transmission Speed</label>
+            <input type="text" asp-for="TransmissionSpeed" placeholder="@Model.TransmissionSpeed" disabled />
+            <span asp-validation-for="TransmissionSpeed"></span>
+        </div>
+        <div class="form-row">
+            <label asp-for="WheelDrive">Wheel Drive Type</label>
+            <input type="text" asp-for="WheelDrive" placeholder="@Model.WheelDrive" disabled />
+            <span asp-validation-for="WheelDrive"></span>
+        </div>
+        <fieldset>
+            <legend>Key Features</legend>
+            <div class="form-row">
+                <label asp-for="SeatNumbers">Passenger Seats</label>
+                <input type="text" asp-for="SeatNumbers" placeholder="@Model.SeatNumbers" disabled />
+                <span asp-validation-for="SeatNumbers"></span>
+            </div>
+            <div class="form-row">
+                <label asp-for="CargoSpace">Cargo Space</label>
+                <input type="text" asp-for="CargoSpace" placeholder="@Model.CargoSpace" disabled />
+                <span asp-validation-for="CargoSpace"></span>
+            </div>
+            <div class="form-row">
+                <label asp-for="DcFastCharging">DC Fast Charging</label>
+                <input type="text" asp-for="DcFastCharging" placeholder="@Model.DcFastCharging" disabled />
+                <span asp-validation-for="DcFastCharging"></span>
+            </div>
+            <div class="form-row">
+                <label asp-for="HomeCharger">Home Charger</label>
+                <input type="text" asp-for="HomeCharger" placeholder="@Model.HomeCharger" disabled />
+                <span asp-validation-for="HomeCharger"></span>
+            </div>
+            <div class="form-row">
+                <label asp-for="SeatHeater">Seat Heater</label>
+                <input type="text" asp-for="SeatHeater" placeholder="@Model.SeatHeater" disabled />
+                <span asp-validation-for="SeatHeater"></span>
+            </div>
+            <div class="form-row">
+                <label asp-for="NumberOfSpeakers">Number of Speakers</label>
+                <input type="text" asp-for="NumberOfSpeakers" placeholder="@Model.NumberOfSpeakers" disabled />
+                <span asp-validation-for="NumberOfSpeakers"></span>
+            </div>
+            <div class="form-row">
+                <label asp-for="RangeOfFullCharge">Range of Full Charge</label>
+                <input type="text" asp-for="RangeOfFullCharge" placeholder="@Model.RangeOfFullCharge" disabled />
+                <span asp-validation-for="RangeOfFullCharge"></span>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Equipments</legend>
+            <div class="form-row">
+                <input type="checkbox" asp-for="Radio" disabled />
+                <label asp-for="Radio">Radio</label>
+            </div>
+            <div class="form-row">
+                <input type="checkbox" asp-for="AndroidAuto_AppleCarPlay" disabled />
+                <label asp-for="AndroidAuto_AppleCarPlay">Android Auto/ Apple Carplay</label>
+            </div>
+            <div class="form-row">
+                <input type="checkbox" asp-for="TouchScreenNavSystem" disabled />
+                <label asp-for="TouchScreenNavSystem">10.2" LCD color touch-screen navigation system</label>
+            </div>
+            <div class="form-row">
+                <input type="checkbox" asp-for="ProjectorBeamLedHeadlight" disabled />
+                <label asp-for="ProjectorBeamLedHeadlight">Projector beam LED headlight</label>
+            </div>
+            <div class="form-row">
+                <input type="checkbox" asp-for="RemoteKeylessEntry" disabled />
+                <label asp-for="RemoteKeylessEntry">Remote Keyless Entry</label>
+            </div>
+            <div class="form-row">
+                <input type="checkbox" asp-for="StandardLowTirePressureWarning" disabled />
+                <label asp-for="StandardLowTirePressureWarning">Standard low tire pressure warning</label>
+            </div>
+            <div class="form-row">
+                <input type="checkbox" asp-for="BluetoothSystem" disabled />
+                <label asp-for="BluetoothSystem">Integrated Bluetooth hands-free phone system w/ phonebook transfer</label>
+            </div>
+            <div class="form-row">
+                <input type="checkbox" asp-for="DriverLumbarSupport" disabled />
+                <label asp-for="DriverLumbarSupport">Driver lumbar support</label>
+            </div>
+            <div class="form-row">
+                <input type="checkbox" asp-for="TouchScreenDisplay" disabled />
+                <label asp-for="TouchScreenDisplay">Touch screen display</label>
+            </div>
+
+        </fieldset>
+
+        <fieldset>
+            <legend>Upload Vehicle image</legend>
+            <div class="container">
+        
+                <div class="container mt-5">
+                    <p>Upload Car pictures</p>
+                    <div class="hero">
+                        <label for="inputFile" id="dropArea">
+                            <input type="file" asp-for="CarPictures" id="inputFile" hidden accept="image/*" />
+                            <div id="imgView">
+                                <img src="http://100dayscss.com/codepen/upload.svg" alt="Upload Image" />
+                                <p>Choose files to Upload </p>
+                            </div>
+                        </label>
+                    </div>
+                </div
+
+                <div class="buttons">
+                    <button type="submit" class="save-btn btn btn-primary col-3 mb-2" style="margin-left: 330px" id="submitButton">Save changes</button>
+                </div>
+
+         </div>
+        </fieldset>
+    </form>
+    <script>
+        document.getElementById('editButton').addEventListener('click', function () {
+            // Get all input fields in the form
+            var inputs = document.querySelectorAll('#myForm input');
+
+            // Enable all input fields
+            inputs.forEach(function (input) {
+                input.disabled = false;
+            });
+
+            // Enable the submit button
+            document.getElementById('submitButton').disabled = false;
+        });
+
+         //Implementation for uploading picture on the form's frontend from youtube video
+        const dropArea = document.getElementById("dropArea");
+        const inputFile = document.getElementById("inputFile");
+        const imgView = document.getElementById("imgView");
+        const imgElement = imgView.querySelector("img");
+        const textElement = imgView.querySelector("p");
+
+        inputFile.addEventListener("change", uploadImage);
+
+        function uploadImage() {
+            if (inputFile.files && inputFile.files[0]) {
+                let imgLink = URL.createObjectURL(inputFile.files[0]);
+                imgElement.src = imgLink;
+                imgElement.style.filter = "none"; // Remove grayscale and brightness filters
+                textElement.style.display = "none"; // Hide the text
+            }
+        }
+    </script>
+</body>
+</html>

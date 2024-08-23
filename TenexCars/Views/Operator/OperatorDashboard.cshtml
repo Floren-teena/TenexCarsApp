@@ -1,0 +1,136 @@
+﻿@model TenexCars.Models.ViewModels.OperatorDashboardViewModel
+
+@{
+    Layout = "_OperatorDashboardLayout";
+}
+
+
+<div class="container mt-3">
+    <div class="d-flex justify-content-around ">
+        <div class="card bg-white text-black shadow" style="width: 20%;   border:solid 1px white; border-radius:8px; ">
+            <div class="card-body">
+                <h4><span class="text-danger">↓ 4%</span></h4>
+                Total Cars: @Model.TotalNumberOfVehicles
+            </div>
+        </div>
+        <div class="card bg-white text-black shadow" style="width: 20%; border:solid 1px white; border-radius:8px; ">
+            <div class="card-body">
+                <h4><span class="text-success">↑ 15%</span></h4>
+                Total Subscribers: @Model.TotalNumberOfSubscribers
+            </div>
+        </div>
+
+        <div class="card bg-white text-black shadow" style="width: 20%; border:solid 1px white; border-radius:8px;  ">
+            <div class="card-body">
+                <h4><span class="text-success">↑ 22%</span></h4>
+                Total Reserved Cars: @Model.TotalNumberOfReservedCars
+            </div>
+        </div>
+        <div class="card bg-white text-black shadow" style="width: 20%;  border:solid 1px white; border-radius:8px; ">
+            <div class="card-body">
+                <h4><span class="text-danger">↓ 8%</span></h4>
+                Total Active Cars: @Model.TotalNumberOfActiveCars
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+<div class="row mt-3" style="width: 100%; height:100vh; margin:0px 0px 0px 20px;">
+    <div class="card  col-lg-8">
+        <div class="col-12">
+            <hr>
+            <form class="row " style="margin-left:200px;>
+                <label for="date" class="col-1 col-form-label  pt-3">Date</label>
+                <div class="col-5">
+                    <div class="input-group date" id="datepicker">
+                        <input type="text" class="form-control " id="date" />
+                        <span class="input-group-append">
+                            <span class="input-group-text d-block">
+                                <i class="fa fa-calendar "></i>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </form>
+            <hr />
+            <canvas id="usersChart" class="mt-1"></canvas>
+
+        </div>
+    </div>
+
+    <div class="card bg-white shadow col-md-3" style="margin-left:3%; border:solid 1px white; border-radius:8px;">
+        <p>Users by subscription</p>
+        <hr />
+        <canvas id="pieChart"></canvas>
+        <hr />
+        <p>Users --</p>
+    </div>
+</div>
+
+
+
+@section Scripts {
+
+
+    <script>
+        $(function () {
+            $('#datepicker').datepicker({
+                format: 'mm/dd/yyyy'
+            });
+        });
+
+        // Area Chart for Users
+        var usersCtx = document.getElementById('usersChart').getContext('2d');
+        var usersChart = new Chart(usersCtx, {
+            type: 'line',
+            data: {
+                labels: Array.from({ length: @Model.CurrentMonthStats.Count }, (_, i) => i + 1),
+                datasets: [
+                    {
+                        label: 'Current Month',
+                        data: @Html.Raw(Json.Serialize(Model.CurrentMonthStats)),
+                        borderColor: 'rgba(0, 123, 255, 1)',
+                        backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                        fill: true
+                    },
+                    {
+                        label: 'Past Month',
+                        data: @Html.Raw(Json.Serialize(Model.PastMonthStats)),
+                        borderColor: 'rgba(220, 53, 69, 1)',
+                        backgroundColor: 'rgba(220, 53, 69, 0.2)',
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Pie Chart for Cars By Type
+        var pieCtx = document.getElementById('pieChart').getContext('2d');
+        var pieChart = new Chart(pieCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Chevrolet', 'Toyota', 'Alfa', 'BMW'], // Example categories
+                datasets: [{
+                    data: [30, 50, 15, 5], // Example data, replace with real data
+                    backgroundColor: ['#007bff', '#6CB4EE', '#002D62', '#dc3545cc']
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    </script>
+}
