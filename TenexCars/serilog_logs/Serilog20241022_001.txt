@@ -1,0 +1,206 @@
+2024-10-22 22:59:38.705 +01:00 [INF] Starting web host
+2024-10-22 22:59:40.685 +01:00 [WRN] The foreign key property 'Operator.AppUserId1' was created in shadow state because a conflicting property with the simple name 'AppUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-10-22 22:59:40.733 +01:00 [WRN] No store type was specified for the decimal property 'Amount' on entity type 'Transaction'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2024-10-22 22:59:45.426 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2024-10-22 22:59:45.856 +01:00 [INF] HTTP GET / responded 200 in 685.7808 ms
+2024-10-22 22:59:45.925 +01:00 [INF] HTTP GET /css/site.css responded 200 in 34.6709 ms
+2024-10-22 22:59:45.925 +01:00 [INF] HTTP GET /Assets/logo2.png responded 200 in 34.6963 ms
+2024-10-22 22:59:45.937 +01:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 200 in 54.1520 ms
+2024-10-22 22:59:45.965 +01:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 200 in 19.3563 ms
+2024-10-22 22:59:45.965 +01:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 200 in 20.8309 ms
+2024-10-22 22:59:45.949 +01:00 [INF] HTTP GET /js/site.js responded 200 in 4.6424 ms
+2024-10-22 22:59:45.983 +01:00 [INF] HTTP GET /Assets/work1.jpg responded 200 in 7.4661 ms
+2024-10-22 22:59:46.006 +01:00 [INF] HTTP GET /Assets/work2.jpg responded 200 in 10.7237 ms
+2024-10-22 22:59:45.984 +01:00 [INF] HTTP GET /Assets/work3.jpg responded 200 in 11.5261 ms
+2024-10-22 22:59:45.954 +01:00 [INF] HTTP GET /js/site.js responded 200 in 3.2046 ms
+2024-10-22 22:59:46.017 +01:00 [INF] HTTP GET /Assets/work4.jpg responded 200 in 10.1087 ms
+2024-10-22 22:59:46.140 +01:00 [INF] HTTP GET /Assets/img-2-3x-img-2-3x.png responded 200 in 249.8594 ms
+2024-10-22 22:59:46.248 +01:00 [INF] HTTP GET /favicon.ico responded 200 in 5.6559 ms
+2024-10-22 22:59:59.062 +01:00 [INF] HTTP GET /Vehicle/FleetOfCars responded 200 in 338.7956 ms
+2024-10-22 22:59:59.098 +01:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.css responded 200 in 7.7677 ms
+2024-10-22 22:59:59.101 +01:00 [INF] HTTP GET /TenexCars.styles.css responded 200 in 2.2377 ms
+2024-10-22 23:00:09.320 +01:00 [INF] HTTP GET /Subscriber/ReserveCar/b2330ab8-5609-4f8f-8d67-079f012aeb25 responded 200 in 94.4694 ms
+2024-10-22 23:00:09.350 +01:00 [INF] HTTP GET /css/site.css responded 304 in 1.8025 ms
+2024-10-22 23:00:09.354 +01:00 [INF] HTTP GET /TenexCars.styles.css responded 304 in 0.3314 ms
+2024-10-22 23:00:09.361 +01:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 304 in 0.3438 ms
+2024-10-22 23:00:09.354 +01:00 [INF] HTTP GET /Assets/logo2.png responded 304 in 0.3353 ms
+2024-10-22 23:00:09.367 +01:00 [INF] HTTP GET /js/site.js responded 304 in 0.2278 ms
+2024-10-22 23:00:09.361 +01:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 304 in 0.3292 ms
+2024-10-22 23:01:33.414 +01:00 [INF] Reserving Car ...
+2024-10-22 23:01:33.847 +01:00 [INF] Reservation Successful!
+2024-10-22 23:01:33.852 +01:00 [INF] HTTP POST /Subscriber/ReserveCar/b2330ab8-5609-4f8f-8d67-079f012aeb25 responded 302 in 476.7059 ms
+2024-10-22 23:01:33.896 +01:00 [INF] HTTP GET /Account/Login responded 200 in 32.2634 ms
+2024-10-22 23:01:33.928 +01:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.css responded 304 in 0.3239 ms
+2024-10-22 23:01:33.943 +01:00 [INF] HTTP GET /TenexCars.styles.css responded 304 in 0.3302 ms
+2024-10-22 23:01:33.943 +01:00 [INF] HTTP GET /css/site.css responded 304 in 0.4484 ms
+2024-10-22 23:01:33.964 +01:00 [INF] HTTP GET /Assets/logo2.png responded 304 in 0.1564 ms
+2024-10-22 23:01:33.964 +01:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 304 in 0.2230 ms
+2024-10-22 23:01:33.974 +01:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 304 in 0.2430 ms
+2024-10-22 23:01:33.997 +01:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js responded 200 in 37.8615 ms
+2024-10-22 23:01:33.984 +01:00 [INF] HTTP GET /js/site.js responded 304 in 0.2392 ms
+2024-10-22 23:01:34.016 +01:00 [INF] HTTP GET /Assets/hand-car.jpg responded 200 in 73.9561 ms
+2024-10-22 23:01:34.009 +01:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 200 in 56.8793 ms
+2024-10-22 23:01:40.604 +01:00 [INF] User found: samlove@gmail.com
+2024-10-22 23:01:40.761 +01:00 [INF] User roles: Main_Subscriber
+2024-10-22 23:01:40.784 +01:00 [INF] Redirecting to Complete Reservation Page ...
+2024-10-22 23:01:40.788 +01:00 [INF] HTTP POST /Account/Login responded 302 in 213.2863 ms
+2024-10-22 23:01:40.860 +01:00 [INF] HTTP GET /Subscriber/CompleteReservation responded 200 in 62.4023 ms
+2024-10-22 23:02:36.683 +01:00 [INF] Completing Reservation ...
+2024-10-22 23:02:42.852 +01:00 [INF] Proceed to Payment
+2024-10-22 23:02:42.859 +01:00 [INF] HTTP POST /Subscriber/CompleteReservation responded 302 in 6250.6526 ms
+2024-10-22 23:02:42.951 +01:00 [INF] HTTP GET /Pay responded 200 in 82.5056 ms
+2024-10-22 23:02:42.983 +01:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.css responded 304 in 0.2922 ms
+2024-10-22 23:02:43.004 +01:00 [INF] HTTP GET /Assets/logo2.png responded 304 in 0.3775 ms
+2024-10-22 23:02:43.005 +01:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 304 in 0.6307 ms
+2024-10-22 23:02:42.997 +01:00 [INF] HTTP GET /TenexCars.styles.css responded 304 in 1.0193 ms
+2024-10-22 23:02:42.997 +01:00 [INF] HTTP GET /css/site.css responded 304 in 1.0866 ms
+2024-10-22 23:02:43.003 +01:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 304 in 0.2917 ms
+2024-10-22 23:02:43.007 +01:00 [INF] HTTP GET /js/site.js responded 304 in 1.9843 ms
+2024-10-22 23:02:50.357 +01:00 [INF] HTTP POST /Pay responded 302 in 1536.3573 ms
+2024-10-22 23:02:58.957 +01:00 [INF] HTTP GET /Pay/Verify responded 200 in 833.6028 ms
+2024-10-22 23:03:09.286 +01:00 [INF] HTTP GET /Subscriber/PostReservation responded 200 in 10.5157 ms
+2024-10-22 23:03:09.313 +01:00 [INF] HTTP GET /TenexCars.styles.css responded 304 in 0.2533 ms
+2024-10-22 23:03:09.327 +01:00 [INF] HTTP GET /Assets/logo2.png responded 200 in 5.4208 ms
+2024-10-22 23:03:22.730 +01:00 [INF] HTTP GET / responded 200 in 19.9704 ms
+2024-10-22 23:03:22.763 +01:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 304 in 0.3145 ms
+2024-10-22 23:03:22.775 +01:00 [INF] HTTP GET /css/site.css responded 304 in 0.2122 ms
+2024-10-22 23:03:22.777 +01:00 [INF] HTTP GET /Assets/logo2.png responded 304 in 0.9452 ms
+2024-10-22 23:03:22.777 +01:00 [INF] HTTP GET /js/site.js responded 304 in 0.4675 ms
+2024-10-22 23:03:22.779 +01:00 [INF] HTTP GET /Assets/work4.jpg responded 304 in 0.8630 ms
+2024-10-22 23:03:22.778 +01:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 304 in 1.2452 ms
+2024-10-22 23:03:22.779 +01:00 [INF] HTTP GET /Assets/work3.jpg responded 304 in 0.5958 ms
+2024-10-22 23:03:22.778 +01:00 [INF] HTTP GET /js/site.js responded 304 in 0.1573 ms
+2024-10-22 23:03:22.778 +01:00 [INF] HTTP GET /Assets/img-2-3x-img-2-3x.png responded 304 in 1.3973 ms
+2024-10-22 23:03:22.780 +01:00 [INF] HTTP GET /Assets/work2.jpg responded 304 in 0.2794 ms
+2024-10-22 23:03:22.778 +01:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 304 in 0.9405 ms
+2024-10-22 23:03:22.780 +01:00 [INF] HTTP GET /Assets/work1.jpg responded 304 in 0.9739 ms
+2024-10-22 23:03:25.739 +01:00 [INF] HTTP GET /Account/Login responded 200 in 6.1091 ms
+2024-10-22 23:03:25.771 +01:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.css responded 304 in 0.6543 ms
+2024-10-22 23:03:25.780 +01:00 [INF] HTTP GET /Assets/hand-car.jpg responded 304 in 1.0909 ms
+2024-10-22 23:03:25.780 +01:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 304 in 0.6575 ms
+2024-10-22 23:03:25.780 +01:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js responded 304 in 0.4449 ms
+2024-10-22 23:03:27.295 +01:00 [INF] User found: samlove@gmail.com
+2024-10-22 23:03:27.396 +01:00 [INF] User roles: Main_Subscriber
+2024-10-22 23:03:27.406 +01:00 [INF] Redirecting to Subscriber page
+2024-10-22 23:03:27.409 +01:00 [INF] HTTP POST /Account/Login responded 302 in 119.4654 ms
+2024-10-22 23:03:27.493 +01:00 [INF] HTTP GET /Subscriber/Profile responded 200 in 73.7944 ms
+2024-10-22 23:03:34.456 +01:00 [INF] HTTP GET /Subscriber/SubscriptionHistory responded 200 in 20.5606 ms
+2024-10-22 23:03:34.488 +01:00 [INF] HTTP GET /TenexCars.styles.css responded 304 in 0.2537 ms
+2024-10-22 23:03:42.242 +01:00 [INF] HTTP GET /Subscriber/ActiveSubscription responded 200 in 19.6976 ms
+2024-10-22 23:03:44.743 +01:00 [INF] HTTP GET /Subscriber/NewSubscription responded 200 in 17.4481 ms
+2024-10-22 23:03:49.045 +01:00 [INF] HTTP GET /Operator/OperatorVehicles/0dcf3291-dd12-4074-b38b-fa8757b0fb7a responded 200 in 72.6262 ms
+2024-10-22 23:03:59.035 +01:00 [INF] HTTP GET /Subscriber/ActiveSubscription responded 200 in 19.4948 ms
+2024-10-22 23:04:01.480 +01:00 [INF] HTTP GET /Subscriber/NewSubscription responded 200 in 5.9492 ms
+2024-10-22 23:04:02.667 +01:00 [INF] HTTP GET /Operator/OperatorVehicles/124f306c-1fe5-4435-be6a-e744646bbe2d responded 200 in 22.5081 ms
+2024-10-22 23:04:02.697 +01:00 [INF] HTTP GET /css/site.css responded 304 in 0.2349 ms
+2024-10-22 23:04:02.707 +01:00 [INF] HTTP GET /TenexCars.styles.css responded 304 in 1.6712 ms
+2024-10-22 23:04:02.707 +01:00 [INF] HTTP GET /Assets/logo2.png responded 304 in 0.3081 ms
+2024-10-22 23:04:02.709 +01:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 304 in 0.2945 ms
+2024-10-22 23:04:02.710 +01:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 304 in 0.9551 ms
+2024-10-22 23:04:02.711 +01:00 [INF] HTTP GET /js/site.js responded 304 in 1.1455 ms
+2024-10-22 23:04:07.124 +01:00 [INF] HTTP GET /Subscriber/ActiveSubscription responded 200 in 8.4651 ms
+2024-10-22 23:04:17.957 +01:00 [INF] HTTP GET /Subscriber/SubscriptionHistory responded 200 in 10.7862 ms
+2024-10-22 23:04:17.989 +01:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.css responded 304 in 0.4866 ms
+2024-10-22 23:04:21.855 +01:00 [INF] HTTP GET /Account/Logout responded 302 in 5.3889 ms
+2024-10-22 23:04:21.888 +01:00 [INF] HTTP GET / responded 200 in 21.1990 ms
+2024-10-22 23:04:21.927 +01:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 304 in 0.2252 ms
+2024-10-22 23:04:21.938 +01:00 [INF] HTTP GET /Assets/img-2-3x-img-2-3x.png responded 304 in 0.1848 ms
+2024-10-22 23:04:21.941 +01:00 [INF] HTTP GET /Assets/work4.jpg responded 304 in 0.2464 ms
+2024-10-22 23:04:21.941 +01:00 [INF] HTTP GET /Assets/work2.jpg responded 304 in 0.4642 ms
+2024-10-22 23:04:21.940 +01:00 [INF] HTTP GET /js/site.js responded 304 in 0.5609 ms
+2024-10-22 23:04:21.941 +01:00 [INF] HTTP GET /Assets/work1.jpg responded 304 in 0.4301 ms
+2024-10-22 23:04:21.941 +01:00 [INF] HTTP GET /Assets/work3.jpg responded 304 in 0.4505 ms
+2024-10-22 23:04:23.457 +01:00 [INF] HTTP GET /Account/Login responded 200 in 5.0544 ms
+2024-10-22 23:04:23.488 +01:00 [INF] HTTP GET /Assets/hand-car.jpg responded 304 in 0.2002 ms
+2024-10-22 23:04:23.496 +01:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 304 in 0.8023 ms
+2024-10-22 23:04:23.497 +01:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js responded 304 in 1.0643 ms
+2024-10-22 23:04:57.599 +01:00 [INF] User found: j.berg@mailinator.com
+2024-10-22 23:04:57.706 +01:00 [INF] User roles: Main_Operator
+2024-10-22 23:04:57.709 +01:00 [INF] Redirecting to Operator page
+2024-10-22 23:04:57.712 +01:00 [INF] HTTP POST /Account/Login responded 302 in 120.9879 ms
+2024-10-22 23:04:57.834 +01:00 [INF] HTTP GET /Operator/OperatorDashboard responded 200 in 112.3731 ms
+2024-10-22 23:04:57.862 +01:00 [INF] HTTP GET /css/site.css responded 304 in 0.1505 ms
+2024-10-22 23:04:57.872 +01:00 [INF] HTTP GET /Assets/logo2.png responded 304 in 0.6035 ms
+2024-10-22 23:04:57.872 +01:00 [INF] HTTP GET /TenexCars.styles.css responded 304 in 0.6395 ms
+2024-10-22 23:04:57.873 +01:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 304 in 0.8881 ms
+2024-10-22 23:04:57.872 +01:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 304 in 0.5887 ms
+2024-10-22 23:04:57.873 +01:00 [INF] HTTP GET /js/site.js responded 304 in 0.8275 ms
+2024-10-22 23:05:11.580 +01:00 [INF] HTTP GET /Subscription/OperatorSubscription responded 200 in 98.2169 ms
+2024-10-22 23:05:11.607 +01:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.css responded 304 in 0.3486 ms
+2024-10-22 23:05:11.613 +01:00 [INF] HTTP GET /Assets/logo2.png responded 304 in 0.2355 ms
+2024-10-22 23:05:28.553 +01:00 [INF] Preparing to send email to samlove@gmail.com
+2024-10-22 23:05:32.792 +01:00 [INF] Email sent successfully to samlove@gmail.com
+2024-10-22 23:05:32.796 +01:00 [INF] HTTP POST /Subscription/AssignVehicle responded 302 in 4263.8054 ms
+2024-10-22 23:05:32.826 +01:00 [INF] HTTP GET /Subscription/OperatorSubscription responded 200 in 19.3067 ms
+2024-10-22 23:05:32.852 +01:00 [INF] HTTP GET /TenexCars.styles.css responded 304 in 0.2256 ms
+2024-10-22 23:05:46.039 +01:00 [INF] HTTP GET /Operator/OperatorDashboard responded 200 in 34.2763 ms
+2024-10-22 23:05:49.567 +01:00 [INF] HTTP GET /Operator/CreateVehicle responded 200 in 156.8017 ms
+2024-10-22 23:05:49.587 +01:00 [INF] HTTP GET /css/site.css responded 304 in 0.5347 ms
+2024-10-22 23:05:49.599 +01:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 304 in 0.7381 ms
+2024-10-22 23:05:49.599 +01:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 304 in 0.4412 ms
+2024-10-22 23:05:49.599 +01:00 [INF] HTTP GET /js/site.js responded 304 in 0.7610 ms
+2024-10-22 23:06:19.270 +01:00 [INF] HTTP GET /Operator/OperatorDashboard responded 200 in 24.4089 ms
+2024-10-22 23:06:19.298 +01:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.css responded 304 in 0.1742 ms
+2024-10-22 23:06:19.304 +01:00 [INF] HTTP GET /TenexCars.styles.css responded 304 in 0.5729 ms
+2024-10-22 23:06:19.304 +01:00 [INF] HTTP GET /Assets/logo2.png responded 304 in 0.2315 ms
+2024-10-22 23:06:20.469 +01:00 [INF] HTTP GET /Subscription/Subscribers responded 200 in 40.4421 ms
+2024-10-22 23:06:20.498 +01:00 [INF] HTTP GET /Assets/logo2.png responded 304 in 0.2938 ms
+2024-10-22 23:06:23.374 +01:00 [INF] HTTP GET /Operator/OperatorDashboard responded 200 in 16.1893 ms
+2024-10-22 23:06:24.688 +01:00 [INF] HTTP GET /Operator/OperatorInventoryPage responded 200 in 39.1277 ms
+2024-10-22 23:09:16.665 +01:00 [INF] HTTP GET /Operator/OperatorInventoryPage responded 200 in 55.7450 ms
+2024-10-22 23:09:16.710 +01:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.css responded 304 in 0.2520 ms
+2024-10-22 23:09:16.721 +01:00 [INF] HTTP GET /css/site.css responded 304 in 0.3265 ms
+2024-10-22 23:09:16.731 +01:00 [INF] HTTP GET /Assets/logo2.png responded 304 in 3.3819 ms
+2024-10-22 23:09:16.748 +01:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 304 in 0.2361 ms
+2024-10-22 23:09:16.748 +01:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 304 in 0.7146 ms
+2024-10-22 23:09:16.723 +01:00 [INF] HTTP GET /TenexCars.styles.css responded 304 in 1.2037 ms
+2024-10-22 23:09:16.748 +01:00 [INF] HTTP GET /js/site.js responded 304 in 0.6771 ms
+2024-10-22 23:09:17.218 +01:00 [INF] HTTP GET /favicon.ico responded 304 in 0.6895 ms
+2024-10-22 23:10:51.264 +01:00 [INF] HTTP GET /Operator/CreateVehicle responded 200 in 43.9826 ms
+2024-10-22 23:10:51.288 +01:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.css responded 304 in 0.2709 ms
+2024-10-22 23:10:51.298 +01:00 [INF] HTTP GET /css/site.css responded 304 in 1.8052 ms
+2024-10-22 23:10:51.300 +01:00 [INF] HTTP GET /TenexCars.styles.css responded 304 in 0.5908 ms
+2024-10-22 23:10:51.318 +01:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 304 in 0.2145 ms
+2024-10-22 23:10:51.301 +01:00 [INF] HTTP GET /Assets/logo2.png responded 304 in 0.4380 ms
+2024-10-22 23:10:51.319 +01:00 [INF] HTTP GET /js/site.js responded 304 in 0.2100 ms
+2024-10-22 23:10:51.318 +01:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 304 in 0.5466 ms
+2024-10-22 23:11:07.576 +01:00 [INF] HTTP GET /Operator/OperatorDashboard responded 200 in 35.4468 ms
+2024-10-22 23:11:07.608 +01:00 [INF] HTTP GET /Assets/logo2.png responded 304 in 0.2503 ms
+2024-10-22 23:11:09.837 +01:00 [INF] HTTP GET /Operator/ManageOperatorMembers responded 200 in 62.2067 ms
+2024-10-22 23:11:37.451 +01:00 [INF] HTTP POST /Operator/AddOperatorMembers responded 302 in 3281.6793 ms
+2024-10-22 23:11:37.476 +01:00 [INF] HTTP GET /Operator/ManageOperatorMembers responded 200 in 14.2493 ms
+2024-10-22 23:11:56.134 +01:00 [INF] HTTP GET /Operator/ManageOperatorMembers responded 200 in 14.5921 ms
+2024-10-22 23:11:59.036 +01:00 [INF] HTTP GET /Operator/OperatorProfileSettings responded 200 in 41.2230 ms
+2024-10-22 23:11:59.070 +01:00 [INF] HTTP GET /TenexCars.styles.css responded 304 in 0.3818 ms
+2024-10-22 23:12:31.644 +01:00 [INF] Password changed successfully!!!
+2024-10-22 23:12:31.648 +01:00 [INF] HTTP POST /Operator/ChangePassword responded 302 in 226.2271 ms
+2024-10-22 23:12:31.671 +01:00 [INF] HTTP GET /Operator/OperatorProfileSettings responded 200 in 10.0506 ms
+2024-10-22 23:12:31.707 +01:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.css responded 304 in 0.5084 ms
+2024-10-22 23:12:31.719 +01:00 [INF] HTTP GET /css/site.css responded 304 in 0.2117 ms
+2024-10-22 23:12:31.734 +01:00 [INF] HTTP GET /lib/jquery/dist/jquery.min.js responded 304 in 2.6916 ms
+2024-10-22 23:12:31.726 +01:00 [INF] HTTP GET /lib/bootstrap/dist/js/bootstrap.bundle.min.js responded 304 in 2.9138 ms
+2024-10-22 23:12:31.736 +01:00 [INF] HTTP GET /js/site.js responded 304 in 0.3965 ms
+2024-10-22 23:12:31.720 +01:00 [INF] HTTP GET /Assets/logo2.png responded 304 in 0.1761 ms
+2024-10-22 23:12:39.519 +01:00 [INF] HTTP GET /Account/Logout responded 302 in 2.5365 ms
+2024-10-22 23:12:39.562 +01:00 [INF] HTTP GET / responded 200 in 26.5891 ms
+2024-10-22 23:12:39.594 +01:00 [INF] HTTP GET /lib/bootstrap/dist/css/bootstrap.min.css responded 304 in 0.2231 ms
+2024-10-22 23:12:39.609 +01:00 [INF] HTTP GET /Assets/work1.jpg responded 304 in 0.6420 ms
+2024-10-22 23:12:39.609 +01:00 [INF] HTTP GET /Assets/work4.jpg responded 304 in 0.5831 ms
+2024-10-22 23:12:39.607 +01:00 [INF] HTTP GET /Assets/img-2-3x-img-2-3x.png responded 304 in 0.9043 ms
+2024-10-22 23:12:39.609 +01:00 [INF] HTTP GET /Assets/work3.jpg responded 304 in 0.5141 ms
+2024-10-22 23:12:39.609 +01:00 [INF] HTTP GET /Assets/work2.jpg responded 304 in 0.6946 ms
+2024-10-22 23:12:39.608 +01:00 [INF] HTTP GET /js/site.js responded 304 in 0.3717 ms
+2024-10-22 23:12:41.279 +01:00 [INF] HTTP GET /Account/Login responded 200 in 8.3172 ms
+2024-10-22 23:12:41.324 +01:00 [INF] HTTP GET /Assets/hand-car.jpg responded 304 in 0.3779 ms
+2024-10-22 23:12:41.327 +01:00 [INF] HTTP GET /lib/jquery-validation/dist/jquery.validate.min.js responded 304 in 0.8748 ms
+2024-10-22 23:12:41.328 +01:00 [INF] HTTP GET /lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js responded 304 in 0.2110 ms
+2024-10-22 23:12:59.512 +01:00 [INF] User found: j.berg@mailinator.com
+2024-10-22 23:12:59.618 +01:00 [INF] User roles: Main_Operator
+2024-10-22 23:12:59.621 +01:00 [INF] Redirecting to Operator page
+2024-10-22 23:12:59.623 +01:00 [INF] HTTP POST /Account/Login responded 302 in 122.3863 ms
+2024-10-22 23:12:59.657 +01:00 [INF] HTTP GET /Operator/OperatorDashboard responded 200 in 23.0824 ms
+2024-10-22 23:12:59.699 +01:00 [INF] HTTP GET /Assets/logo2.png responded 304 in 0.2695 ms
+2024-10-22 23:13:10.185 +01:00 [INF] HTTP GET /Operator/OperatorInventoryPage responded 200 in 28.9959 ms
+2024-10-22 23:13:14.153 +01:00 [INF] HTTP GET /Operator/CarDetails/3e938f3f-a7c1-48c6-bbe8-2916f4969de8 responded 200 in 53.9773 ms
+2024-10-22 23:13:14.183 +01:00 [INF] HTTP GET /TenexCars.styles.css responded 304 in 0.2136 ms
+2024-10-22 23:13:22.521 +01:00 [INF] HTTP GET /Operator/OperatorDashboard responded 200 in 21.7925 ms
